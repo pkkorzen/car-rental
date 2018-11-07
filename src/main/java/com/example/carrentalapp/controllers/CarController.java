@@ -65,6 +65,7 @@ public class CarController {
     @GetMapping("cars/add/")
     public String addCar(Model model){
         model.addAttribute("text", "New");
+        model.addAttribute("car", new Car());
         return "cars/car";
     }
 
@@ -87,8 +88,8 @@ public class CarController {
 
     @GetMapping("cars/delete/{id}")
     public String deleteCar(@PathVariable Long id){
-        Optional<Car> carOptional = carService.findCarById(id);
-        carOptional.ifPresent(car -> carService.deleteCar(id));
+
+        carService.deleteCar(id);
 
         return "cars/all-cars";
     }

@@ -1,6 +1,8 @@
 package com.example.carrentalapp.services.impl;
 
+import com.example.carrentalapp.entities.Address;
 import com.example.carrentalapp.entities.Rental;
+import com.example.carrentalapp.entities.User;
 import com.example.carrentalapp.services.RentalService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,5 +29,14 @@ public class RentalServiceImplTest {
         LocalDate endDate = LocalDate.of(2018, Month.NOVEMBER,3);
         Iterable<Rental> rentals = rentalService.findRentalsByDateBetween(startDate, endDate);
         assertEquals(1, ((List<Rental>) rentals).size());
+    }
+
+    @Test
+    public void shouldFindRentalsForGivenUser(){
+        User user = new User();
+        user.setId(10L);
+
+        Iterable<Rental> rentals = rentalService.findAllRentalsByUser(user);
+        assertEquals(2, ((List<Rental>) rentals).size());
     }
 }

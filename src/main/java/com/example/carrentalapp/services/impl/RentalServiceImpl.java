@@ -1,6 +1,7 @@
 package com.example.carrentalapp.services.impl;
 
 import com.example.carrentalapp.entities.Rental;
+import com.example.carrentalapp.entities.User;
 import com.example.carrentalapp.repositories.RentalRepository;
 import com.example.carrentalapp.services.RentalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,12 @@ public class RentalServiceImpl implements RentalService {
     @Override
     public List<Rental> findAllRentals() {
         Iterable<Rental> rentals = rentalRepository.findAll();
+        return StreamSupport.stream(rentals.spliterator(), true).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Rental> findAllRentalsByUser(User user) {
+        Iterable<Rental> rentals = rentalRepository.findAllByUser(user);
         return StreamSupport.stream(rentals.spliterator(), true).collect(Collectors.toList());
     }
 
