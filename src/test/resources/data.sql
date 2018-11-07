@@ -18,4 +18,5 @@ INSERT INTO user (id, name, surname, id_address, mail, phone) VALUES
 (10, 'Jan', 'Kowalski', 13, 'j@malpa.pl', '555123443');
 
 INSERT INTO rental (id, id_user, id_car, rental_date, planned_date) VALUES
-(10, 10, 10, '2018-11-01', '2018-11-06');
+(10, 10, 10, '2018-11-01', '2018-11-06'),
+(11, 10, 11, '2018-10-01', '2018-10-06');
