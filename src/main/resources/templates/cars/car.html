@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${text} + ' car'">address</title>
+</head>
+<body>
+<h2 th:text="${text} + ' car'"><b>address</b></h2>
+<form action="#" th:action="@{/cars/save}" th:object="${car}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <p>Make: <input type="text" th:field="*{make}"/></p>
+    <p>Model: <input type="text" th:field="*{model}"/></p>
+    <p>Registration Number: <input type="text" th:field="*{regNumber}"/></p>
+    <p>Door Number: <input type="number" th:field="*{doorNumber}"/></p>
+    <p>Gearbox: <select th:field="*{gearbox}">
+        <option th:each="type : ${gearboxType}" th:value="${type}" th:text="${type}">
+        </option>
+    </select></p>
+    <p>Capacity: <input type="number" th:field="*{capacity}"/></p>
+    <p>Year: <input type="number" th:field="*{year}"/></p>
+    <p>Type: <select th:field="*{type}">
+        <option th:each="type : ${types}" th:value="${type}" th:text="${type.type}"></option>
+<!--        <option th:if="*{type!=null}" th:value="*{type}" th:text="*{type.type}">
+        </option>
+        <option th:unless="*{type!=null}" value="">Choose...</option>
+        <option th:each="type : ${types}" th:if="${car.type} != ${type}" th:value="${type}" th:text="${type.type}">
+        </option>-->
+    </select></p>
+    <p><input type="submit" name="pressed-button" value="Save"/>
+        <input type="submit" name="pressed-button" value="Cancel"/>
+        <input type="reset" value="Reset"/></p>
+</form>
+</body>
+</html>

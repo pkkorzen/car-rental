@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cars</title>
+</head>
+<body>
+<h2 th:text="${text} + ' cars'">cars: </h2>
+<h2 th th:if="${startDate!=null}" th:text="'between: ' + ${startDate} + ' - ' + ${endDate}"></h2>
+<table>
+    <thead>
+    <tr>
+        <th>Make</th>
+        <th>Model</th>
+        <th>Registration Number</th>
+        <th>Door Number</th>
+        <th>Gearbox</th>
+        <th>Capacity</th>
+        <th>Year</th>
+        <th>Type</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="car : ${cars}">
+        <td th:text="${car.make}">Alabastrowa</td>
+        <td th:text="${car.model}">30</td>
+        <td th:text="${car.regNumber}">00-001</td>
+        <td th:text="${car.doorNumber}">Warsaw</td>
+        <td th:text="${car.gearbox}">Warsaw</td>
+        <td th:text="${car.capacity}">Warsaw</td>
+        <td th:text="${car.year}">Warsaw</td>
+        <td th:text="${car.type.type}">Warsaw</td>
+        <td><a th:href="@{'/cars/edit/' + ${car.id}}">Edit</a> </td>
+        <td><a th:href="@{'/cars/delete-confirmation/' + ${car.id}}">Delete</a> </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

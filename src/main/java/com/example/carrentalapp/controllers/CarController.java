@@ -2,8 +2,11 @@ package com.example.carrentalapp.controllers;
 
 import com.example.carrentalapp.entities.Car;
 import com.example.carrentalapp.entities.Rental;
+import com.example.carrentalapp.entities.Type;
+import com.example.carrentalapp.entities.enums.Gearbox;
 import com.example.carrentalapp.services.CarService;
 import com.example.carrentalapp.services.RentalService;
+import com.example.carrentalapp.services.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,17 +22,20 @@ public class CarController {
 
     private CarService carService;
     private RentalService rentalService;
+    private TypeService typeService;
 
     @Autowired
-    public CarController(CarService carService, RentalService rentalService){
+    public CarController(CarService carService, RentalService rentalService, TypeService typeService){
         this.carService = carService;
         this.rentalService = rentalService;
+        this.typeService = typeService;
     }
 
     @GetMapping("/all-cars")
     public String showAllCars(Model model){
         List<Car> cars = carService.findAllCars();
         model.addAttribute("cars", cars);
+        model.addAttribute("text", "All");
         return "cars/all-cars";
     }
 
@@ -45,12 +51,17 @@ public class CarController {
     }*/
 
 //to wyglada na lepsze rozwiazanie z customRepository i jpql query aniżeli przerabianie danych z 2 tabel w javie
-    @GetMapping("/available-cars")
-    public String showAvailableCars(Model model, @RequestParam(name="startDate") LocalDate startDate,
-                                    @RequestParam(name="endDate") LocalDate endDate){
-        List<Car> cars = carService.findCarsAvailableBetweenDates(startDate, endDate);
+    @PostMapping("/available-cars")
+    public String showAvailableCars(Model model, @RequestParam(name="startDate") String startDate,
+                                    @RequestParam(name="endDate") String endDate){
+        LocalDate rentalDate = LocalDate.parse(startDate);
+        LocalDate returnDate = LocalDate.parse(endDate);
+        List<Car> cars = carService.findCarsAvailableBetweenDates(rentalDate, returnDate);
         model.addAttribute("cars", cars);
-        return"cars/available-cars";
+        model.addAttribute("text", "Available");
+        model.addAttribute("startDate", rentalDate);
+        model.addAttribute("endDate", returnDate);
+        return"cars/all-cars";
     }
 
     @PostMapping("cars/save")
@@ -62,17 +73,22 @@ public class CarController {
         return "redirect:/all-cars";
     }
 
-    @GetMapping("cars/add/")
+    @GetMapping("cars/add")
     public String addCar(Model model){
+        List<Type> types = typeService.findAll();
         model.addAttribute("text", "New");
         model.addAttribute("car", new Car());
+        model.addAttribute("gearboxType", Gearbox.values());
+        model.addAttribute("types", types);
         return "cars/car";
     }
 
     @GetMapping("cars/edit/{id}")
     public String editCar(@PathVariable Long id, Model model){
+        List<Type> types = typeService.findAll();
         model.addAttribute("text", "Edit");
-
+        model.addAttribute("gearboxType", Gearbox.values());
+        model.addAttribute("types", types);
         Optional<Car> carOptional = carService.findCarById(id);
         carOptional.ifPresent(car -> model.addAttribute("car", car));
 
