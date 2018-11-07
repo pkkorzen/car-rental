@@ -7,11 +7,11 @@ import com.example.carrentalapp.services.RentalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -30,7 +30,7 @@ public class CarController {
     public String showAllCars(Model model){
         List<Car> cars = carService.findAllCars();
         model.addAttribute("cars", cars);
-        return "/all-cars";
+        return "cars/all-cars";
     }
 
 /*    @GetMapping("/available-cars")
@@ -50,7 +50,46 @@ public class CarController {
                                     @RequestParam(name="endDate") LocalDate endDate){
         List<Car> cars = carService.findCarsAvailableBetweenDates(startDate, endDate);
         model.addAttribute("cars", cars);
-        return"/available-cars";
+        return"cars/available-cars";
     }
 
+    @PostMapping("cars/save")
+    public String saveCar(@ModelAttribute Car car, @RequestParam("pressed-button") String pushedButton){
+
+        if(pushedButton.equalsIgnoreCase("save")){
+            carService.saveCar(car);
+        }
+        return "redirect:/all-cars";
+    }
+
+    @GetMapping("cars/add/")
+    public String addCar(Model model){
+        model.addAttribute("text", "New");
+        return "cars/car";
+    }
+
+    @GetMapping("cars/edit/{id}")
+    public String editCar(@PathVariable Long id, Model model){
+        model.addAttribute("text", "Edit");
+
+        Optional<Car> carOptional = carService.findCarById(id);
+        carOptional.ifPresent(car -> model.addAttribute("car", car));
+
+        return "cars/car";
+    }
+
+    @GetMapping("cars/delete-confirmation/{id}")
+    public String deleteConfirmation(@PathVariable Long id, Model model){
+        Optional<Car> carOptional = carService.findCarById(id);
+        carOptional.ifPresent(car -> model.addAttribute("carToAsk", car));
+        return "cars/delete-confirmation";
+    }
+
+    @GetMapping("cars/delete/{id}")
+    public String deleteCar(@PathVariable Long id){
+        Optional<Car> carOptional = carService.findCarById(id);
+        carOptional.ifPresent(car -> carService.deleteCar(id));
+
+        return "cars/all-cars";
+    }
 }
