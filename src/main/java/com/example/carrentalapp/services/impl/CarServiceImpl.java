@@ -6,6 +6,7 @@ import com.example.carrentalapp.services.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,6 +31,11 @@ public class CarServiceImpl implements CarService {
     public List<Car> findAllCars() {
         Iterable<Car> carIterable = carRepository.findAll();
         return StreamSupport.stream(carIterable.spliterator(), true).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Car> findCarsAvailableBetweenDates(LocalDate startDate, LocalDate endDate) {
+        return carRepository.findCarsAvaialbleBetweenDates(startDate, endDate);
     }
 
     @Override

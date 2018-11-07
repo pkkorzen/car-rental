@@ -33,7 +33,7 @@ public class CarController {
         return "/all-cars";
     }
 
-    @GetMapping("/available-cars")
+/*    @GetMapping("/available-cars")
     public String showAvailableCars(Model model, @RequestParam(name="startDate") LocalDate startDate,
                                     @RequestParam(name="endDate") LocalDate endDate){
         List<Car> cars = carService.findAllCars();
@@ -42,5 +42,15 @@ public class CarController {
         cars.removeAll(rentedCars);
         model.addAttribute("cars", cars);
         return"/available-cars";
+    }*/
+
+//to wyglada na lepsze rozwiazanie z customRepository i jpql query aniżeli przerabianie danych z 2 tabel w javie
+    @GetMapping("/available-cars")
+    public String showAvailableCars(Model model, @RequestParam(name="startDate") LocalDate startDate,
+                                    @RequestParam(name="endDate") LocalDate endDate){
+        List<Car> cars = carService.findCarsAvailableBetweenDates(startDate, endDate);
+        model.addAttribute("cars", cars);
+        return"/available-cars";
     }
+
 }
