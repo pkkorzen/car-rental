@@ -6,6 +6,7 @@ import com.example.carrentalapp.services.RentalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,6 +25,12 @@ public class RentalServiceImpl implements RentalService {
     @Override
     public Optional<Rental> findRentalById(Long id) {
         return rentalRepository.findById(id);
+    }
+
+    @Override
+    public List<Rental> findRentalsByDateBetween(LocalDate startDate, LocalDate endDate) {
+        Iterable<Rental> rentals = rentalRepository.findAllByRentalDateBeforeAndPlannedDateAfter(endDate, startDate);
+        return StreamSupport.stream(rentals.spliterator(), true).collect(Collectors.toList());
     }
 
     @Override
