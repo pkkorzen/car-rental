@@ -24,7 +24,7 @@ public class RentalController {
     public String showAllRentals(Model model){
         List<Rental> rentals = rentalService.findAllRentals();
         model.addAttribute("rentals", rentals);
-        return "rentals/all";
+        return "rentals/all-rentals";
     }
 
     @PostMapping("rentals/save")
@@ -41,7 +41,7 @@ public class RentalController {
     public String addRental(Model model){
         model.addAttribute("text", "Add");
         model.addAttribute("rental", new Rental());
-        return "cars/car";
+        return "rentals/rental";
     }
 
     @GetMapping("rentals/edit/{id}")
@@ -50,7 +50,7 @@ public class RentalController {
 
         Optional<Rental> rentalOptional = rentalService.findRentalById(id);
         rentalOptional.ifPresent(rental -> rentalService.saveRental(rental));
-        return "cars/car";
+        return "rentals/rental";
     }
 
     @GetMapping("rentals/delete-confirmation/{id}")
