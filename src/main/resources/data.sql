@@ -14,8 +14,9 @@ INSERT INTO car (id, make, model, reg_number, door_number, gearbox, capacity, ye
 (11, 'Ford', 'Fiesta', 'BGD1269', 3, 'M', 5, 2015, 10),
 (12, 'Mazda', 'Mx6', 'WAW1233', 3, 'M', 5, 2016, 11);
 
-INSERT INTO user (id, name, surname, id_address, mail, phone) VALUES
-(10, 'Jan', 'Kowalski', 13, 'j@malpa.pl', '555123443');
+INSERT INTO user (id, name, surname, id_address, mail, phone, login, password, role) VALUES
+(10, 'Jan', 'Kowalski', 13, 'j@malpa.pl', '555123443', 'janek', 'bomba', 'ROLE_ADMIN'),
+(11, 'Dawid', 'Nowak', 12, 'd@nowak.pl', '534763749', 'dawidek', 'tromba', 'ROLE_USER');
 
 INSERT INTO rental (id, id_user, id_car, rental_date, planned_date) VALUES
 (10, 10, 10, '2018-11-01', '2018-11-06'),

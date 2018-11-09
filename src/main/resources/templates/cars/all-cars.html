@@ -18,8 +18,8 @@
         <th>Capacity</th>
         <th>Year</th>
         <th>Type</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th th:if="${userRole.equals('ROLE_ADMIN')}">Edit</th>
+        <th th:if="${userRole.equals('ROLE_ADMIN')}">Delete</th>
     </tr>
     </thead>
     <tbody>
@@ -32,8 +32,8 @@
         <td th:text="${car.capacity}">Warsaw</td>
         <td th:text="${car.year}">Warsaw</td>
         <td th:text="${car.type.type}">Warsaw</td>
-        <td><a th:href="@{'/cars/edit/' + ${car.id}}">Edit</a> </td>
-        <td><a th:href="@{'/cars/delete-confirmation/' + ${car.id}}">Delete</a> </td>
+        <td th:if="${userRole.equals('ROLE_ADMIN')}"><a th:href="@{'/cars/edit/' + ${car.id}}">Edit</a> </td>
+        <td th:if="${userRole.equals('ROLE_ADMIN')}"><a th:href="@{'/cars/delete-confirmation/' + ${car.id}}">Delete</a> </td>
     </tr>
     </tbody>
 </table>

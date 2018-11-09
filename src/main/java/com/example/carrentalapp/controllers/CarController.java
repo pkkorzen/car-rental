@@ -3,11 +3,14 @@ package com.example.carrentalapp.controllers;
 import com.example.carrentalapp.entities.Car;
 import com.example.carrentalapp.entities.Rental;
 import com.example.carrentalapp.entities.Type;
+import com.example.carrentalapp.entities.User;
 import com.example.carrentalapp.entities.enums.Gearbox;
 import com.example.carrentalapp.services.CarService;
 import com.example.carrentalapp.services.RentalService;
 import com.example.carrentalapp.services.TypeService;
+import com.example.carrentalapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,19 +26,23 @@ public class CarController {
     private CarService carService;
     private RentalService rentalService;
     private TypeService typeService;
+    private UserService userService;
 
     @Autowired
-    public CarController(CarService carService, RentalService rentalService, TypeService typeService){
+    public CarController(CarService carService, RentalService rentalService, TypeService typeService, UserService userService){
         this.carService = carService;
         this.rentalService = rentalService;
         this.typeService = typeService;
+        this.userService = userService;
     }
 
     @GetMapping("/all-cars")
-    public String showAllCars(Model model){
+    public String showAllCars(Model model, Authentication authentication){
         List<Car> cars = carService.findAllCars();
         model.addAttribute("cars", cars);
         model.addAttribute("text", "All");
+        Optional<User> userOptional = userService.findUserByLogin(authentication.getName());
+        userOptional.ifPresent(user -> model.addAttribute("userRole", user.getRole()));
         return "cars/all-cars";
     }
 
@@ -53,7 +60,7 @@ public class CarController {
 //to wyglada na lepsze rozwiazanie z customRepository i jpql query aniżeli przerabianie danych z 2 tabel w javie
     @PostMapping("/available-cars")
     public String showAvailableCars(Model model, @RequestParam(name="startDate") String startDate,
-                                    @RequestParam(name="endDate") String endDate){
+                                    @RequestParam(name="endDate") String endDate, Authentication authentication){
         LocalDate rentalDate = LocalDate.parse(startDate);
         LocalDate returnDate = LocalDate.parse(endDate);
         List<Car> cars = carService.findCarsAvailableBetweenDates(rentalDate, returnDate);
@@ -61,6 +68,8 @@ public class CarController {
         model.addAttribute("text", "Available");
         model.addAttribute("startDate", rentalDate);
         model.addAttribute("endDate", returnDate);
+        Optional<User> userOptional = userService.findUserByLogin(authentication.getName());
+        userOptional.ifPresent(user -> model.addAttribute("userRole", user.getRole()));
         return"cars/all-cars";
     }
 
