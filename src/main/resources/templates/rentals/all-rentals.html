@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rentals</title>
+</head>
+<body>
+<h2 th:text="${text} + ' rentals' ">All rentals: </h2>
+<table>
+    <thead>
+    <tr>
+        <th>User</th>
+        <th>Car</th>
+        <th>Rental Date</th>
+        <th>Planned Date</th>
+        <th>Return Date</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="rental : ${rentals}">
+        <td th:text="${rental.user.name} + ' ' + ${rental.user.surname}">Alabastrowa</td>
+        <td th:text="${rental.car.make} + ' ' + ${rental.car.model}">30</td>
+        <td th:text="${rental.rentalDate}">00-001</td>
+        <td th:text="${rental.plannedDate}">Warsaw</td>
+        <td th:text="${rental.returnDate}">Warsaw</td>
+        <td><a th:href="@{'/rentals/edit/' + ${rental.id}}">Edit</a> </td>
+        <td><a th:href="@{'/rentals/delete-confirmation/' + ${rental.id}}">Delete</a> </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

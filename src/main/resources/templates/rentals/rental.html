@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${text} + ' rental'">address</title>
+</head>
+<body>
+<h2 th:text="${text} + ' rental'"><b>address</b></h2>
+<form action="#" th:action="@{/rentals/save}" th:object="${rental}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <p th:if="${userRole.equals('ROLE_ADMIN')}">User: <select th:field="*{user}">
+        <option th:each="user : ${users}" th:value="${user}" th:text="${user.name} + ' ' + ${user.surname}"></option>
+    </select></p>
+    <p>Car: <select th:field="*{car}">
+        <option th:each="car : ${cars}" th:value="${car}" th:text="${car.make} + ' ' + ${car.model}">
+        </option>
+        </select></p>
+    <p>Rental Date: <input type="date" th:field="*{rentalDate}"/></p>
+    <p>Planned Date: <input type="date" th:field="*{plannedDate}"/></p>
+    <p>Return Date: <input type="date" th:field="*{returnDate}"/></p>
+    <p><input type="submit" name="pressed-button" value="Save"/>
+        <input type="submit" name="pressed-button" value="Cancel"/>
+        <input type="reset" value="Reset"/></p>
+</form>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete confirmation</title>
+</head>
+<body>
+<h2>Do you really want to delete car:</h2>
+<h2 th:text="${rentalToAsk.id} + ' ' + ${rentalToAsk.car.make} + ', ' + ${rentalToAsk.car.model} + ', ' + ${rentalToAsk.rentalDate} + ', ' + ${rentalToAsk.plannedDate} + '?'"></h2>
+<a th:href="@{'/rentals/delete/' + ${rentalToAsk.id}}">Yes</a>&nbsp;&nbsp;<a th:href="@{/all-cars}">No</a>
+</body>
+</html>
