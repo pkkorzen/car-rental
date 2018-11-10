@@ -12,6 +12,7 @@
     <p th:if="${userRole.equals('ROLE_ADMIN')}">User: <select th:field="*{user}">
         <option th:each="user : ${users}" th:value="${user}" th:text="${user.name} + ' ' + ${user.surname}"></option>
     </select></p>
+    <p th:unless="${userRole.equals('ROLE_ADMIN')}"><input type="hidden" th:field="*{user.id}"/></p>
     <p>Car: <select th:field="*{car}">
         <option th:each="car : ${cars}" th:value="${car}" th:text="${car.make} + ' ' + ${car.model}">
         </option>

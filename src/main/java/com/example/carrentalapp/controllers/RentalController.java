@@ -25,25 +25,25 @@ public class RentalController {
     private CarService carService;
 
     @Autowired
-    public RentalController(RentalService rentalService, UserService userService, CarService carService){
+    public RentalController(RentalService rentalService, UserService userService, CarService carService) {
         this.rentalService = rentalService;
         this.userService = userService;
         this.carService = carService;
     }
 
     @GetMapping("/all-rentals")
-    public String showAllRentals(Model model, Authentication authentication){
+    public String showAllRentals(Model model, Authentication authentication) {
         String login = authentication.getName();
         Optional<User> userOptional = userService.findUserByLogin(login);
         User user = new User();
 
-        if(userOptional.isPresent()){
+        if (userOptional.isPresent()) {
             user = userOptional.get();
         }
 
         List<Rental> rentals;
 
-        if("ROLE_ADMIN".equals(user.getRole())){
+        if ("ROLE_ADMIN".equals(user.getRole())) {
             rentals = rentalService.findAllRentals();
             model.addAttribute("text", "All");
         } else {
@@ -56,9 +56,9 @@ public class RentalController {
     }
 
     @PostMapping("rentals/save")
-    public String saveRental(@ModelAttribute Rental rental, @RequestParam("pressed-button") String pushedButton){
+    public String saveRental(@ModelAttribute Rental rental, @RequestParam("pressed-button") String pushedButton) {
 
-        if (pushedButton.equalsIgnoreCase("save")){
+        if (pushedButton.equalsIgnoreCase("save")) {
             rentalService.saveRental(rental);
         }
 
@@ -67,14 +67,14 @@ public class RentalController {
 
     //ten chyba do wyrzucenia, nie będziemy raczej chcieli dodawać rentali w ten sposób
     @GetMapping("rentals/add")
-    public String addRental(Model model){
+    public String addRental(Model model) {
         model.addAttribute("text", "Add");
         model.addAttribute("rental", new Rental());
         return "rentals/rental";
     }
 
     @GetMapping("rentals/edit/{id}")
-    public String editRental(@PathVariable Long id, Model model, Authentication authentication){
+    public String editRental(@PathVariable Long id, Model model, Authentication authentication) {
         model.addAttribute("text", "Edit");
 
         List<User> users = userService.findAll();
@@ -85,7 +85,7 @@ public class RentalController {
         LocalDate rentalDate = LocalDate.now();
         LocalDate plannedDate = rentalDate.plus(1, ChronoUnit.DAYS);
 
-        if(rentalOptional.isPresent()){
+        if (rentalOptional.isPresent()) {
             Rental rental = rentalOptional.get();
             model.addAttribute("rental", rental);
             rentalDate = rental.getRentalDate();
@@ -101,15 +101,39 @@ public class RentalController {
     }
 
     @GetMapping("rentals/delete-confirmation/{id}")
-    public String deleteConfirmation(@PathVariable Long id, Model model){
+    public String deleteConfirmation(@PathVariable Long id, Model model) {
         Optional<Rental> rentalOptional = rentalService.findRentalById(id);
         rentalOptional.ifPresent(rental -> model.addAttribute("rentalToAsk", rental));
         return "rentals/delete-confirmation";
     }
 
     @GetMapping("rentals/delete/{id}")
-    public String deleteRental(@PathVariable Long id){
+    public String deleteRental(@PathVariable Long id) {
         rentalService.deleteRental(id);
         return "redirect:/all-rentals";
+    }
+
+    @GetMapping("rentals/rental-confirmation/{id}/{startDate}/{endDate}")
+    public String confirmRental(@PathVariable Long id, @PathVariable String startDate, @PathVariable String endDate,
+                                Model model, Authentication authentication) {
+
+        Rental rental = new Rental();
+
+        String login = authentication.getName();
+        Optional<User> userOptional = userService.findUserByLogin(login);
+        userOptional.ifPresent(rental::setUser);
+
+        LocalDate rentalDate = LocalDate.parse(startDate);
+        LocalDate plannedDate = LocalDate.parse(endDate);
+
+        rental.setRentalDate(rentalDate);
+        rental.setPlannedDate(plannedDate);
+
+        Optional<Car> carOptional = carService.findCarById(id);
+        carOptional.ifPresent(rental::setCar);
+
+        model.addAttribute("rental", rental);
+        return "rentals/rental-confirmation";
+
     }
 }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rental Confirmation</title>
+</head>
+<body>
+<h2>Rental Confirmation</h2>
+<form action="#" th:action="@{/rentals/save}" th:object="${rental}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <p><input type="hidden" th:field="*{user}" readonly/></p>
+    <!--<p>Car: <input type="text" th:field="*{car}" th:text="${rental.car.make} + ', ' + ${rental.car.model}" readonly/></p>-->
+    <p>Car: <select th:field="*{car}">
+        <option th:value="${rental.car.id}" th:text="${rental.car.make} + ' ' + ${rental.car.model}">
+        </option>
+    </select></p>
+    <p>Rental Date: <input type="date" th:field="*{rentalDate}" readonly/></p>
+    <p>Planned Date: <input type="date" th:field="*{plannedDate}"  readonly/></p>
+    <p><input type="hidden" th:field="*{returnDate}" readonly>
+    <p><input type="submit" name="pressed-button" value="Save"/>
+        <input type="submit" name="pressed-button" value="Cancel"/>
+        <input type="reset" value="Reset"/></p>
+</form>
+</body>
+</html>

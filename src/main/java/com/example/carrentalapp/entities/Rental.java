@@ -1,5 +1,7 @@
 package com.example.carrentalapp.entities;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -15,8 +17,11 @@ public class Rental {
     @ManyToOne
     @JoinColumn(name ="id_car")
     private Car car;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate rentalDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate plannedDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate returnDate;
 
     public Long getId() {

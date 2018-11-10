@@ -34,6 +34,7 @@
         <td th:text="${car.type.type}">Warsaw</td>
         <td th:if="${userRole.equals('ROLE_ADMIN')}"><a th:href="@{'/cars/edit/' + ${car.id}}">Edit</a> </td>
         <td th:if="${userRole.equals('ROLE_ADMIN')}"><a th:href="@{'/cars/delete-confirmation/' + ${car.id}}">Delete</a> </td>
+        <td th:if="${startDate!=null}"><a th:href="@{'/rentals/rental-confirmation/' + ${car.id} + '/' + ${startDate} + '/' + ${endDate} }">Rent</a> </td>
     </tr>
     </tbody>
 </table>
