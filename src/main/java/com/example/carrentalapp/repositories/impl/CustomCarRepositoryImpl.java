@@ -20,7 +20,8 @@ public class CustomCarRepositoryImpl implements CustomCarRepository {
     @Override
     public List<Car> findCarsAvaialbleBetweenDates(LocalDate startDate, LocalDate endDate) {
 
-        Query query = em.createQuery("SELECT c FROM Car c LEFT JOIN Rental r ON c.id = r.car.id WHERE r.rentalDate > ?1 OR r.plannedDate < ?2 OR r.id is null");
+        //Query query = em.createQuery("SELECT c FROM Car c LEFT JOIN Rental r ON c.id = r.car.id WHERE r.rentalDate > ?1 OR r.plannedDate < ?2 OR r.id is null");
+        Query query = em.createQuery("SELECT c FROM Car c WHERE c.id NOT IN (SELECT ca.id FROM Car ca LEFT JOIN Rental r ON ca.id = r.car.id WHERE r.rentalDate < ?1 AND r.plannedDate > ?2)");
         query.setParameter(1, endDate);
         query.setParameter(2, startDate);
         List<Car> cars = query.getResultList();

@@ -18,7 +18,8 @@ INSERT INTO user (id, name, surname, id_address, mail, phone, login, password, r
 (10, 'Jan', 'Kowalski', 13, 'j@malpa.pl', '555123443', 'janek', 'bomba', 'ROLE_ADMIN'),
 (11, 'Dawid', 'Nowak', 12, 'd@nowak.pl', '534763749', 'dawidek', 'tromba', 'ROLE_USER');
 
-INSERT INTO rental (id, id_user, id_car, rental_date, planned_date) VALUES
-(10, 10, 10, '2018-11-01', '2018-11-06'),
-(11, 10, 11, '2018-10-01', '2018-10-06'),
-(12, 11, 12, '2018-11-08', '2018-11-09');
+INSERT INTO rental (id, id_user, id_car, rental_date, planned_date, return_date) VALUES
+(10, 10, 10, '2018-11-01', '2018-11-06', '2018-11-06'),
+(11, 10, 11, '2018-10-01', '2018-10-06', '2018-11-06'),
+(12, 11, 12, '2018-11-08', '2018-11-09', '2018-11-09'),
+(13, 10, 12, '2018-11-10', '2018-11-11', '2018-11-11');
