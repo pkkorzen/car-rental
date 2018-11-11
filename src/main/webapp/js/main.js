@@ -1,24 +1,20 @@
 $("document").ready(function(){
+
+    function leadingZero(i){
+        return (i<10)? '0'+i: i;
+    }
+
     var today = new Date();
-    var dd = today.getDate();
-    var dd1 = today.getDate()+1;
-    var mm = today.getMonth()+1; //January is 0!
-    var yyyy = today.getFullYear();
+    var tomorrow = new Date();
 
-    if(dd<10) {
-        dd = '0'+dd
-    }
 
-    if(dd1<10) {
-        dd1 = '0'+dd1
-    }
+    today = today.getFullYear() + '-' + leadingZero(today.getMonth()+1) + '-' + leadingZero(today.getDate());
+    tomorrow = tomorrow.getFullYear() + '-' + leadingZero(tomorrow.getMonth()+1) + '-' + leadingZero(tomorrow.getDate()+1);
 
-    if(mm<10) {
-        mm = '0'+mm
-    }
-
-    today = yyyy + '-' + mm + '-' + dd;
-    var tomorrow = yyyy + '-' + mm + '-' + dd1;
-    $('#start_date').attr('value', today).attr('min', today);
+    $('#start_date').attr('value', today).attr('min', today).on('change', function(){
+        var startDate = new Date($('#start_date').val());
+        var endDate = startDate.getFullYear() + '-' + leadingZero(startDate.getMonth()+1) + '-' + leadingZero(startDate.getDate()+1);
+        $('#end_date').attr('min', endDate)
+    });
     $('#end_date').attr('value', tomorrow).attr('min', tomorrow);
 });
