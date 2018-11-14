@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -19,9 +20,17 @@ public class UserController {
     public UserController(UserService userService){
         this.userService = userService;
     }
+
     @GetMapping("/user/login")
     public String loginUser(){
         return "login";
+    }
+
+    @GetMapping("all-users")
+    public String showAllUsers(Model model){
+        List<UserDto> userDtos = userService.findAll();
+        model.addAttribute("users", userDtos);
+        return "user/all-users";
     }
 
     @PostMapping("user/save")
@@ -29,7 +38,7 @@ public class UserController {
         if (pushedButton.equalsIgnoreCase("save")){
             userService.save(userDto);
         }
-        return"/";
+        return "../static/index";
     }
 
     @GetMapping("user/edit/{id}")
@@ -38,5 +47,20 @@ public class UserController {
         Optional<UserDto> userOptional = userService.findUserById(id);
         userOptional.ifPresent(user -> model.addAttribute("user", user));
         return "user/user";
+    }
+
+    @GetMapping("user/delete-confirmation/{id}")
+    public String deleteConfirmation(@PathVariable Long id, Model model){
+        Optional<UserDto> userDtoOptional = userService.findUserById(id);
+        userDtoOptional.ifPresent(userDto -> model.addAttribute("userToAsk", userDto));
+        return "user/delete-confirmation";
+    }
+
+    @GetMapping("user/delete/{id}")
+    public String deleteUser(@PathVariable Long id){
+
+        userService.deleteUser(id);
+
+        return "user/all-users";
     }
 }

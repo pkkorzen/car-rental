@@ -10,7 +10,7 @@ public class User {
     private Long id;
     private String name;
     private String surname;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_address")
     private Address address;
     private String mail;

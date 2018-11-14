@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+<h2>All users: </h2>
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Mail</th>
+        <th>Phone</th>
+        <th>Login</th>
+        <th>Role</th>
+        <th>Street</th>
+        <th>Number</th>
+        <th>City</th>
+        <th>Zip code</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}">Alabastrowa</td>
+        <td th:text="${user.name}">30</td>
+        <td th:text="${user.surname}">30</td>
+        <td th:text="${user.mail}">00-001</td>
+        <td th:text="${user.phone}">Warsaw</td>
+        <td th:text="${user.login}">Warsaw</td>
+        <td th:text="${user.role}">Warsaw</td>
+        <td th:text="${user.street}">Warsaw</td>
+        <td th:text="${user.number}">Warsaw</td>
+        <td th:text="${user.city}">Warsaw</td>
+        <td th:text="${user.zipCode}">Warsaw</td>
+        <td><a th:href="@{'/user/edit/' + ${user.id}}">Edit</a> </td>
+        <td><a th:href="@{'/user/delete-confirmation/' + ${user.id}}">Delete</a> </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

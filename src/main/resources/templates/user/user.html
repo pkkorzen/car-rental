@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${text} + ' user'">address</title>
+</head>
+<body>
+<h2 th:text="${text} + ' user'"><b>address</b></h2>
+<form action="#" th:action="@{/user/save}" th:object="${user}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <input type="hidden" th:field="*{role}"/>
+    <input type="hidden" th:field="*{login}"/>
+    <input type="hidden" th:field="*{password}"/>
+    <input type="hidden" th:field="*{addressId}"/>
+    <p>Name: <input type="text" th:field="*{name}"/></p>
+    <p>Surnam: <input type="text" th:field="*{surname}"/></p>
+    <p>Email: <input type="email" th:field="*{mail}"/></p>
+    <p>Phone: <input type="text" th:field="*{phone}"/></p>
+    <p>Street: <input type="text" th:field="*{street}"/></p>
+    <p>Number: <input type="number" th:field="*{number}"/></p>
+    <p>City: <input type="text" th:field="*{city}"/></p>
+    <p>ZipCode: <input type="text" th:field="*{zipCode}"/></p>
+    <p><input type="submit" name="pressed-button" value="Save"/>
+        <input type="submit" name="pressed-button" value="Cancel"/>
+        <input type="reset" value="Reset"/></p>
+</form>
+</body>
+</html>
