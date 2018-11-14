@@ -1,5 +1,7 @@
 package com.example.carrentalapp.services.impl;
 
+import com.example.carrentalapp.converters.UserConverter;
+import com.example.carrentalapp.dto.UserDto;
 import com.example.carrentalapp.entities.Rental;
 import com.example.carrentalapp.entities.User;
 import com.example.carrentalapp.repositories.RentalRepository;
@@ -17,6 +19,8 @@ import java.util.stream.StreamSupport;
 public class RentalServiceImpl implements RentalService {
 
     private RentalRepository rentalRepository;
+    @Autowired
+    private UserConverter userConverter;
 
     @Autowired
     public RentalServiceImpl(RentalRepository rentalRepository){
@@ -41,8 +45,8 @@ public class RentalServiceImpl implements RentalService {
     }
 
     @Override
-    public List<Rental> findAllRentalsByUser(User user) {
-        Iterable<Rental> rentals = rentalRepository.findAllByUser(user);
+    public List<Rental> findAllRentalsByUser(UserDto userDto) {
+        Iterable<Rental> rentals = rentalRepository.findAllByUser(userConverter.apply(userDto));
         return StreamSupport.stream(rentals.spliterator(), true).collect(Collectors.toList());
     }
 

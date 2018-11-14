@@ -1,5 +1,6 @@
 package com.example.carrentalapp.services;
 
+import com.example.carrentalapp.dto.UserDto;
 import com.example.carrentalapp.entities.Rental;
 import com.example.carrentalapp.entities.User;
 
@@ -11,7 +12,7 @@ public interface RentalService {
     Optional<Rental> findRentalById(Long id);
     List<Rental> findRentalsByDateBetween(LocalDate startDate, LocalDate endDate);
     List<Rental> findAllRentals();
-    List<Rental> findAllRentalsByUser(User user);
+    List<Rental> findAllRentalsByUser(UserDto userDto);
     void saveRental(Rental rental);
     void deleteRental(Long id);
 }

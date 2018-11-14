@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    Optional<User> findUserByLogin(String login);
-    Optional<User> findUserById(Long id);
-    List<User> findAll();
+    Optional<UserDto> findUserByLogin(String login);
+    Optional<UserDto> findUserById(Long id);
+    List<UserDto> findAll();
     void save(UserDto userDto);
 }

@@ -35,7 +35,7 @@ public class UserController {
     @GetMapping("user/edit/{id}")
     public String editUser(@PathVariable Long id, Model model){
         model.addAttribute("text", "Edit");
-        Optional<User> userOptional = userService.findUserById(id);
+        Optional<UserDto> userOptional = userService.findUserById(id);
         userOptional.ifPresent(user -> model.addAttribute("user", user));
         return "user/user";
     }

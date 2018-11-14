@@ -1,5 +1,7 @@
 package com.example.carrentalapp.controllers;
 
+import com.example.carrentalapp.converters.UserConverter;
+import com.example.carrentalapp.dto.UserDto;
 import com.example.carrentalapp.entities.Car;
 import com.example.carrentalapp.entities.Rental;
 import com.example.carrentalapp.entities.User;
@@ -25,6 +27,9 @@ public class RentalController {
     private CarService carService;
 
     @Autowired
+    private UserConverter userConverter;
+
+    @Autowired
     public RentalController(RentalService rentalService, UserService userService, CarService carService) {
         this.rentalService = rentalService;
         this.userService = userService;
@@ -34,20 +39,20 @@ public class RentalController {
     @GetMapping("/all-rentals")
     public String showAllRentals(Model model, Authentication authentication) {
         String login = authentication.getName();
-        Optional<User> userOptional = userService.findUserByLogin(login);
-        User user = new User();
+        Optional<UserDto> userOptional = userService.findUserByLogin(login);
+        UserDto userDto = new UserDto();
 
         if (userOptional.isPresent()) {
-            user = userOptional.get();
+            userDto = userOptional.get();
         }
 
         List<Rental> rentals;
 
-        if ("ROLE_ADMIN".equals(user.getRole())) {
+        if ("ROLE_ADMIN".equals(userDto.getRole())) {
             rentals = rentalService.findAllRentals();
             model.addAttribute("text", "All");
         } else {
-            rentals = rentalService.findAllRentalsByUser(user);
+            rentals = rentalService.findAllRentalsByUser(userDto);
             model.addAttribute("text", "Your");
         }
 
@@ -77,7 +82,7 @@ public class RentalController {
     public String editRental(@PathVariable Long id, Model model, Authentication authentication) {
         model.addAttribute("text", "Edit");
 
-        List<User> users = userService.findAll();
+        List<UserDto> users = userService.findAll();
 
         Optional<Rental> rentalOptional = rentalService.findRentalById(id);
         rentalOptional.ifPresent(rental -> model.addAttribute("rental", rental));
@@ -93,7 +98,7 @@ public class RentalController {
         }
 
         List<Car> cars = carService.findCarsAvailableBetweenDates(rentalDate, plannedDate);
-        Optional<User> userOptional = userService.findUserByLogin(authentication.getName());
+        Optional<UserDto> userOptional = userService.findUserByLogin(authentication.getName());
         userOptional.ifPresent(user -> model.addAttribute("userRole", user.getRole()));
         model.addAttribute("users", users);
         model.addAttribute("cars", cars);
@@ -120,8 +125,9 @@ public class RentalController {
         Rental rental = new Rental();
 
         String login = authentication.getName();
-        Optional<User> userOptional = userService.findUserByLogin(login);
-        userOptional.ifPresent(rental::setUser);
+        Optional<UserDto> userOptional = userService.findUserByLogin(login);
+        //do poprawki, jak przejdziemy na rentalDto to mozna wtedy tylko ID zostawic zamiast calego usera i konwersja niepotrzebna
+        userOptional.ifPresent(userDto -> rental.setUser(userConverter.apply(userDto)));
 
         LocalDate rentalDate = LocalDate.parse(startDate);
         LocalDate plannedDate = LocalDate.parse(endDate);

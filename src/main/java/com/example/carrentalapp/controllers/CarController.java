@@ -1,5 +1,6 @@
 package com.example.carrentalapp.controllers;
 
+import com.example.carrentalapp.dto.UserDto;
 import com.example.carrentalapp.entities.Car;
 import com.example.carrentalapp.entities.Rental;
 import com.example.carrentalapp.entities.Type;
@@ -41,7 +42,7 @@ public class CarController {
         List<Car> cars = carService.findAllCars();
         model.addAttribute("cars", cars);
         model.addAttribute("text", "All");
-        Optional<User> userOptional = userService.findUserByLogin(authentication.getName());
+        Optional<UserDto> userOptional = userService.findUserByLogin(authentication.getName());
         userOptional.ifPresent(user -> model.addAttribute("userRole", user.getRole()));
         return "cars/all-cars";
     }
@@ -68,7 +69,7 @@ public class CarController {
         model.addAttribute("text", "Available");
         model.addAttribute("startDate", rentalDate);
         model.addAttribute("endDate", returnDate);
-        Optional<User> userOptional = userService.findUserByLogin(authentication.getName());
+        Optional<UserDto> userOptional = userService.findUserByLogin(authentication.getName());
         userOptional.ifPresent(user -> model.addAttribute("userRole", user.getRole()));
         return"cars/all-cars";
     }

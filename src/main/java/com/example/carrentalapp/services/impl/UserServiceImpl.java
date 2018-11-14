@@ -1,6 +1,7 @@
 package com.example.carrentalapp.services.impl;
 
 import com.example.carrentalapp.converters.UserConverter;
+import com.example.carrentalapp.converters.UserDtoConverter;
 import com.example.carrentalapp.dto.UserDto;
 import com.example.carrentalapp.entities.User;
 import com.example.carrentalapp.repositories.UserRepository;
@@ -18,26 +19,32 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
     private UserConverter userConverter;
+    private UserDtoConverter userDtoConverter;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserConverter userConverter){
+    public UserServiceImpl(UserRepository userRepository, UserConverter userConverter, UserDtoConverter userDtoConverter){
         this.userRepository = userRepository;
         this.userConverter = userConverter;
+        this.userDtoConverter = userDtoConverter;
     }
 
     @Override
-    public List<User> findAll() {
+    public List<UserDto> findAll() {
         Iterable<User> users = userRepository.findAll();
-        return StreamSupport.stream(users.spliterator(), true).collect(Collectors.toList());
+        return StreamSupport.stream(users.spliterator(), true)
+                .map(user -> userDtoConverter.apply(user))
+                .collect(Collectors.toList());
     }
     @Override
-    public Optional<User> findUserByLogin(String login) {
-        return userRepository.findUserByLogin(login);
+    public Optional<UserDto> findUserByLogin(String login) {
+        Optional<User> userOptional = userRepository.findUserByLogin(login);
+        return userOptional.map(user -> userDtoConverter.apply(user));
     }
 
     @Override
-    public Optional<User> findUserById(Long id) {
-        return userRepository.findById(id);
+    public Optional<UserDto> findUserById(Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        return userOptional.map(user -> userDtoConverter.apply(user));
     }
 
     @Override

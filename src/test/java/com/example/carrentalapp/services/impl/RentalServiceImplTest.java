@@ -1,5 +1,6 @@
 package com.example.carrentalapp.services.impl;
 
+import com.example.carrentalapp.dto.UserDto;
 import com.example.carrentalapp.entities.Address;
 import com.example.carrentalapp.entities.Rental;
 import com.example.carrentalapp.entities.User;
@@ -33,7 +34,7 @@ public class RentalServiceImplTest {
 
     @Test
     public void shouldFindRentalsForGivenUser(){
-        User user = new User();
+        UserDto user = new UserDto();
         user.setId(10L);
 
         Iterable<Rental> rentals = rentalService.findAllRentalsByUser(user);
