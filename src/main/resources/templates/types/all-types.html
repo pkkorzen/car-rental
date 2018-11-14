@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Types</title>
+</head>
+<body>
+<h2>All types: </h2>
+<table>
+    <thead>
+    <tr>
+        <th>Type</th>
+        <th>Price</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="type : ${types}">
+        <td th:text="${type.type}">Alabastrowa</td>
+        <td th:text="${type.price}">30</td>
+        <td><a th:href="@{'/cars/edit/' + ${type.id}}">Edit</a> </td>
+        <td><a th:href="@{'/cars/delete-confirmation/' + ${type.id}}">Delete</a> </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

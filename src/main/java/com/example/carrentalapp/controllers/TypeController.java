@@ -25,7 +25,7 @@ public class TypeController {
     public String showAllTypes(Model model){
         List<Type> types = typeService.findAll();
         model.addAttribute("types", types);
-        return "types/all";
+        return "types/all-types";
     }
 
     @PostMapping("types/save")
