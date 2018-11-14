@@ -1,5 +1,7 @@
 package com.example.carrentalapp.services.impl;
 
+import com.example.carrentalapp.converters.UserConverter;
+import com.example.carrentalapp.dto.UserDto;
 import com.example.carrentalapp.entities.User;
 import com.example.carrentalapp.repositories.UserRepository;
 import com.example.carrentalapp.services.UserService;
@@ -15,16 +17,18 @@ import java.util.stream.StreamSupport;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+    private UserConverter userConverter;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, UserConverter userConverter){
+        this.userRepository = userRepository;
+        this.userConverter = userConverter;
+    }
 
     @Override
     public List<User> findAll() {
         Iterable<User> users = userRepository.findAll();
         return StreamSupport.stream(users.spliterator(), true).collect(Collectors.toList());
-    }
-
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository){
-        this.userRepository = userRepository;
     }
     @Override
     public Optional<User> findUserByLogin(String login) {
@@ -34,5 +38,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findUserById(Long id) {
         return userRepository.findById(id);
+    }
+
+    @Override
+    public void save(UserDto userDto) {
+        userRepository.save(userConverter.apply(userDto));
     }
 }

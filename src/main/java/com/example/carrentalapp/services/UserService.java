@@ -1,5 +1,6 @@
 package com.example.carrentalapp.services;
 
+import com.example.carrentalapp.dto.UserDto;
 import com.example.carrentalapp.entities.User;
 
 import java.util.List;
@@ -9,4 +10,5 @@ public interface UserService {
     Optional<User> findUserByLogin(String login);
     Optional<User> findUserById(Long id);
     List<User> findAll();
+    void save(UserDto userDto);
 }
