@@ -25,7 +25,7 @@ public class CarServiceImplTest {
     public void findCarsAvailableBetweenDates() {
         LocalDate startDate = LocalDate.of(2018, Month.NOVEMBER, 1);
         LocalDate endDate = LocalDate.of(2018, Month.NOVEMBER,3);
-        List<Car> cars = carRepository.findCarsAvaialbleBetweenDates(startDate, endDate);
+        List<Car> cars = carRepository.findCarsAvailableBetweenDates(startDate, endDate);
         assertEquals(2, cars.size());
     }
 }

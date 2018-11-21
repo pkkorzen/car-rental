@@ -35,7 +35,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public List<Car> findCarsAvailableBetweenDates(LocalDate startDate, LocalDate endDate) {
-        return carRepository.findCarsAvaialbleBetweenDates(startDate, endDate);
+        return carRepository.findCarsAvailableBetweenDates(startDate, endDate);
     }
 
     @Override
