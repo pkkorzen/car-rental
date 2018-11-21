@@ -1,15 +1,9 @@
 package com.example.carrentalapp.controllers;
 
 import com.example.carrentalapp.dto.UserDto;
-import com.example.carrentalapp.entities.Car;
-import com.example.carrentalapp.entities.Rental;
-import com.example.carrentalapp.entities.Type;
-import com.example.carrentalapp.entities.User;
+import com.example.carrentalapp.entities.*;
 import com.example.carrentalapp.entities.enums.Gearbox;
-import com.example.carrentalapp.services.CarService;
-import com.example.carrentalapp.services.RentalService;
-import com.example.carrentalapp.services.TypeService;
-import com.example.carrentalapp.services.UserService;
+import com.example.carrentalapp.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -28,13 +22,15 @@ public class CarController {
     private RentalService rentalService;
     private TypeService typeService;
     private UserService userService;
+    private LocationService locationService;
 
     @Autowired
-    public CarController(CarService carService, RentalService rentalService, TypeService typeService, UserService userService){
+    public CarController(CarService carService, RentalService rentalService, TypeService typeService, UserService userService, LocationService locationService){
         this.carService = carService;
         this.rentalService = rentalService;
         this.typeService = typeService;
         this.userService = userService;
+        this.locationService = locationService;
     }
 
     @GetMapping("/all-cars")
@@ -61,10 +57,23 @@ public class CarController {
 //to wyglada na lepsze rozwiazanie z customRepository i jpql query aniżeli przerabianie danych z 2 tabel w javie
     @PostMapping("/available-cars")
     public String showAvailableCars(Model model, @RequestParam(name="startDate") String startDate,
-                                    @RequestParam(name="endDate") String endDate, Authentication authentication){
+                                    @RequestParam(name="endDate") String endDate,
+                                    @RequestParam(name="startLocation") String startLocation,
+                                    @RequestParam(name="endLocation") String endLocation,
+                                    Authentication authentication){
         LocalDate rentalDate = LocalDate.parse(startDate);
         LocalDate returnDate = LocalDate.parse(endDate);
-        List<Car> cars = carService.findCarsAvailableBetweenDates(rentalDate, returnDate);
+        Long startLocationId = Long.parseLong(startLocation);
+        Long endLocationId = Long.parseLong(endLocation);
+        Optional<Location> startLocationOptional = locationService.findLocationById(startLocationId);
+        Optional<Location> endLocationOptional = locationService.findLocationById(endLocationId);
+        Location rentalLocation = null;
+        if(startLocationOptional.isPresent()){
+            model.addAttribute("startLocation", startLocationOptional.get());
+            rentalLocation = startLocationOptional.get();
+        }
+        endLocationOptional.ifPresent(location -> model.addAttribute("endLocation", location));
+        List<Car> cars = carService.findCarsAvailableBetweenDatesInGivenLocation(rentalDate, returnDate, rentalLocation);
         model.addAttribute("cars", cars);
         model.addAttribute("text", "Available");
         model.addAttribute("startDate", rentalDate);
@@ -118,5 +127,12 @@ public class CarController {
         carService.deleteCar(id);
 
         return "cars/all-cars";
+    }
+
+    @GetMapping("/")
+    public String index(Model model){
+        List<Location> locations = locationService.findAllLocations();
+        model.addAttribute("locations", locations);
+        return "../static/index";
     }
 }

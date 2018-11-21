@@ -1,6 +1,7 @@
 package com.example.carrentalapp.services.impl;
 
 import com.example.carrentalapp.entities.Car;
+import com.example.carrentalapp.entities.Location;
 import com.example.carrentalapp.repositories.CarRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,4 +29,14 @@ public class CarServiceImplTest {
         List<Car> cars = carRepository.findCarsAvailableBetweenDates(startDate, endDate);
         assertEquals(2, cars.size());
     }
+    @Test
+    public void findCarsAvailableBetweenDatesInGivenLocation() {
+        LocalDate startDate = LocalDate.of(2018, Month.NOVEMBER, 21);
+        LocalDate endDate = LocalDate.of(2018, Month.NOVEMBER,22);
+        Location location = new Location();
+        location.setId(10L);
+        List<Car> cars = carRepository.findCarsAvailableBetweenDatesInGivenLocation(startDate, endDate, location);
+        assertEquals(1, cars.size());
+    }
+
 }

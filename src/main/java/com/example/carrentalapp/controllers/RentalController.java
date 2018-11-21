@@ -3,9 +3,11 @@ package com.example.carrentalapp.controllers;
 import com.example.carrentalapp.converters.UserConverter;
 import com.example.carrentalapp.dto.UserDto;
 import com.example.carrentalapp.entities.Car;
+import com.example.carrentalapp.entities.Location;
 import com.example.carrentalapp.entities.Rental;
 import com.example.carrentalapp.entities.User;
 import com.example.carrentalapp.services.CarService;
+import com.example.carrentalapp.services.LocationService;
 import com.example.carrentalapp.services.RentalService;
 import com.example.carrentalapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +27,17 @@ public class RentalController {
     private RentalService rentalService;
     private UserService userService;
     private CarService carService;
+    private LocationService locationService;
 
     @Autowired
     private UserConverter userConverter;
 
     @Autowired
-    public RentalController(RentalService rentalService, UserService userService, CarService carService) {
+    public RentalController(RentalService rentalService, UserService userService, CarService carService, LocationService locationService) {
         this.rentalService = rentalService;
         this.userService = userService;
         this.carService = carService;
+        this.locationService = locationService;
     }
 
     @GetMapping("/all-rentals")
@@ -118,8 +122,9 @@ public class RentalController {
         return "redirect:/all-rentals";
     }
 
-    @GetMapping("rentals/rental-confirmation/{id}/{startDate}/{endDate}")
+    @GetMapping("rentals/rental-confirmation/{id}/{startDate}/{endDate}/{startLocationId}/{endLocationId}")
     public String confirmRental(@PathVariable Long id, @PathVariable String startDate, @PathVariable String endDate,
+                                @PathVariable Long startLocationId, @PathVariable Long endLocationId,
                                 Model model, Authentication authentication) {
 
         Rental rental = new Rental();
@@ -132,6 +137,10 @@ public class RentalController {
         LocalDate rentalDate = LocalDate.parse(startDate);
         LocalDate plannedDate = LocalDate.parse(endDate);
 
+        Optional<Location> rentalLocationOptional = locationService.findLocationById(startLocationId);
+        rentalLocationOptional.ifPresent(rental::setRentalPlace);
+        Optional<Location> returnLocationOptional = locationService.findLocationById(endLocationId);
+        returnLocationOptional.ifPresent(rental::setReturnPlace);
         rental.setRentalDate(rentalDate);
         rental.setPlannedDate(plannedDate);
 

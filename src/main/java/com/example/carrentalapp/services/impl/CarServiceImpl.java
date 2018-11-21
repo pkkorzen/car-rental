@@ -1,6 +1,7 @@
 package com.example.carrentalapp.services.impl;
 
 import com.example.carrentalapp.entities.Car;
+import com.example.carrentalapp.entities.Location;
 import com.example.carrentalapp.repositories.CarRepository;
 import com.example.carrentalapp.services.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,11 @@ public class CarServiceImpl implements CarService {
     @Override
     public List<Car> findCarsAvailableBetweenDates(LocalDate startDate, LocalDate endDate) {
         return carRepository.findCarsAvailableBetweenDates(startDate, endDate);
+    }
+
+    @Override
+    public List<Car> findCarsAvailableBetweenDatesInGivenLocation(LocalDate startDate, LocalDate endDate, Location location) {
+        return carRepository.findCarsAvailableBetweenDatesInGivenLocation(startDate, endDate, location);
     }
 
     @Override

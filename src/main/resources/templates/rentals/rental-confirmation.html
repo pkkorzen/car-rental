@@ -11,12 +11,21 @@
     <input type="hidden" th:field="*{id}"/>
     <p><input type="hidden" th:field="*{user}" readonly/></p>
     <!--<p>Car: <input type="text" th:field="*{car}" th:text="${rental.car.make} + ', ' + ${rental.car.model}" readonly/></p>-->
+    <!--ten powyżej nie wyświetlał tekstu tylko id w ramce i tekst poza ramka-->
     <p>Car: <select th:field="*{car}">
         <option th:value="${rental.car.id}" th:text="${rental.car.make} + ' ' + ${rental.car.model}">
         </option>
     </select></p>
-    <p>Rental Date: <input type="date" th:field="*{rentalDate}" readonly/></p>
-    <p>Planned Date: <input type="date" th:field="*{plannedDate}"  readonly/></p>
+    <p>Pick up Date: <input type="date" th:field="*{rentalDate}" readonly/></p>
+    <p>Drop off Date: <input type="date" th:field="*{plannedDate}"  readonly/></p>
+    <p>Pick up location:  <select th:field="*{rentalPlace}">
+        <option th:value="${rental.rentalPlace.id}" th:text="${rental.rentalPlace.city} + ', ' + ${rental.rentalPlace.street} + ' ' + ${rental.rentalPlace.number}">
+        </option>
+    </select></p>
+    <p>Drop off location: <select th:field="*{returnPlace}">
+        <option th:value="${rental.returnPlace.id}" th:text="${rental.returnPlace.city} + ', ' + ${rental.returnPlace.street} + ' ' + ${rental.returnPlace.number}">
+        </option>
+    </select></p>
     <p><input type="hidden" th:field="*{returnDate}" readonly>
     <p><input type="submit" name="pressed-button" value="Save"/>
         <input type="submit" name="pressed-button" value="Cancel"/>

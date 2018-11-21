@@ -6,7 +6,7 @@
 </head>
 <body>
 <h2 th:text="${text} + ' cars'">cars: </h2>
-<h2 th th:if="${startDate!=null}" th:text="'between: ' + ${startDate} + ' - ' + ${endDate}"></h2>
+<h2 th th:if="${startDate!=null}" th:text="'between: ' + ${startDate} + ' - ' + ${endDate} + ' in ' + ${startLocation.city} + ', ' + ${startLocation.street} + ' ' + ${startLocation.number}"></h2>
 <table>
     <thead>
     <tr>
@@ -34,7 +34,7 @@
         <td th:text="${car.type.type}">Warsaw</td>
         <td th:if="${userRole.equals('ROLE_ADMIN')}"><a th:href="@{'/cars/edit/' + ${car.id}}">Edit</a> </td>
         <td th:if="${userRole.equals('ROLE_ADMIN')}"><a th:href="@{'/cars/delete-confirmation/' + ${car.id}}">Delete</a> </td>
-        <td th:if="${startDate!=null}"><a th:href="@{'/rentals/rental-confirmation/' + ${car.id} + '/' + ${startDate} + '/' + ${endDate} }">Rent</a> </td>
+        <td th:if="${startDate!=null}"><a th:href="@{'/rentals/rental-confirmation/' + ${car.id} + '/' + ${startDate} + '/' + ${endDate}+ '/' + ${startLocation.id}+ '/' + ${endLocation.id} }">Rent</a> </td>
     </tr>
     </tbody>
 </table>

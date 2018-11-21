@@ -23,6 +23,12 @@ public class Rental {
     private LocalDate plannedDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate returnDate;
+    @ManyToOne
+    @JoinColumn(name = "rental_place")
+    private Location rentalPlace;
+    @ManyToOne
+    @JoinColumn(name = "return_place")
+    private Location returnPlace;
 
     public Long getId() {
         return id;
@@ -70,5 +76,21 @@ public class Rental {
 
     public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
+    }
+
+    public Location getRentalPlace() {
+        return rentalPlace;
+    }
+
+    public void setRentalPlace(Location rentalPlace) {
+        this.rentalPlace = rentalPlace;
+    }
+
+    public Location getReturnPlace() {
+        return returnPlace;
+    }
+
+    public void setReturnPlace(Location returnPlace) {
+        this.returnPlace = returnPlace;
     }
 }

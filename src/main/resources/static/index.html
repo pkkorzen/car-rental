@@ -12,6 +12,14 @@
 <form action="/available-cars" method="post">
     <p>Pick up date: <input type="date" name="startDate" id="start_date" min="2018-11-01" value="2018-11-01"/></p>
     <p>Drop of date: <input type="date" name="endDate" id="end_date" min="2018-11-01" value="2018-11-01"/></p>
+    <p>Pick up location: <select name="startLocation">
+        <option th:each="location : ${locations}" th:value="${location}" th:text="${location.city} + ', ' + ${location.street} + ' ' + ${location.number} ">
+        </option>
+    </select></p>
+    <p>Drop off location: <select name="endLocation">
+        <option th:each="location : ${locations}" th:value="${location}" th:text="${location.city} + ', ' + ${location.street} + ' ' + ${location.number} ">
+        </option>
+    </select></p>
     <p><input type="submit" name="pressed-button" value="Submit"/>
         <input type="reset" value="Reset"/></p>
 </form>
