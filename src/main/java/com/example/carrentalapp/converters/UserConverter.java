@@ -26,7 +26,7 @@ public class UserConverter implements Function<UserDto, User> {
         user.setLogin(userDto.getLogin());
         user.setPassword(userDto.getPassword());
 
-        if(userDto.getId()!=0){
+        if(userDto.getId()!=null){
             user.setId(userDto.getId());
             Optional<Address> addressOptional = addressService.findAddressById(userDto.getAddressId());
             addressOptional.ifPresent(user::setAddress);

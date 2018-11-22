@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Controller
 public class CarController {
@@ -73,7 +72,7 @@ public class CarController {
             rentalLocation = startLocationOptional.get();
         }
         endLocationOptional.ifPresent(location -> model.addAttribute("endLocation", location));
-        List<Car> cars = carService.findCarsAvailableBetweenDatesInGivenLocation(rentalDate, returnDate, rentalLocation);
+        List<Car> cars = carService.findCarsAvailableByDatesAndLocation(rentalDate, returnDate, rentalLocation);
         model.addAttribute("cars", cars);
         model.addAttribute("text", "Available");
         model.addAttribute("startDate", rentalDate);

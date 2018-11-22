@@ -5,7 +5,6 @@ import com.example.carrentalapp.dto.UserDto;
 import com.example.carrentalapp.entities.Car;
 import com.example.carrentalapp.entities.Location;
 import com.example.carrentalapp.entities.Rental;
-import com.example.carrentalapp.entities.User;
 import com.example.carrentalapp.services.CarService;
 import com.example.carrentalapp.services.LocationService;
 import com.example.carrentalapp.services.RentalService;
@@ -101,7 +100,7 @@ public class RentalController {
             plannedDate = rental.getPlannedDate();
         }
 
-        List<Car> cars = carService.findCarsAvailableBetweenDates(rentalDate, plannedDate);
+        List<Car> cars = carService.findCarsAvailableByDates(rentalDate, plannedDate);
         Optional<UserDto> userOptional = userService.findUserByLogin(authentication.getName());
         userOptional.ifPresent(user -> model.addAttribute("userRole", user.getRole()));
         model.addAttribute("users", users);

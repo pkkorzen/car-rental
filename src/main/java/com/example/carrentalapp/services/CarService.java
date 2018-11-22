@@ -10,8 +10,8 @@ import java.util.Optional;
 public interface CarService {
     Optional<Car> findCarById(Long id);
     List<Car> findAllCars();
-    List<Car> findCarsAvailableBetweenDates(LocalDate startDate, LocalDate endDate);
-    List<Car> findCarsAvailableBetweenDatesInGivenLocation(LocalDate startDate, LocalDate endDate, Location location);
+    List<Car> findCarsAvailableByDates(LocalDate startDate, LocalDate endDate);
+    List<Car> findCarsAvailableByDatesAndLocation(LocalDate startDate, LocalDate endDate, Location location);
     void saveCar(Car car);
     void deleteCar(Long id);
 }

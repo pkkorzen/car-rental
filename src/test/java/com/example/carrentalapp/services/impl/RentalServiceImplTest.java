@@ -1,9 +1,7 @@
 package com.example.carrentalapp.services.impl;
 
 import com.example.carrentalapp.dto.UserDto;
-import com.example.carrentalapp.entities.Address;
-import com.example.carrentalapp.entities.Rental;
-import com.example.carrentalapp.entities.User;
+import com.example.carrentalapp.entities.*;
 import com.example.carrentalapp.services.RentalService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +23,18 @@ public class RentalServiceImplTest {
     private RentalService rentalService;
 
     @Test
+    public void shouldFindRentalById(){
+        Rental rental = rentalService.findRentalById(10L).get();
+        assertEquals(LocalDate.of(2018, 11, 1),rental.getRentalDate());
+    }
+
+    @Test
+    public void shouldFindAllRentals(){
+        List<Rental> rentals = rentalService.findAllRentals();
+        assertEquals(5, rentals.size());
+    }
+
+    @Test
     public void shouldFindRentalsBetweenGivenDates() {
         LocalDate startDate = LocalDate.of(2018, Month.NOVEMBER, 1);
         LocalDate endDate = LocalDate.of(2018, Month.NOVEMBER,3);
@@ -36,8 +46,30 @@ public class RentalServiceImplTest {
     public void shouldFindRentalsForGivenUser(){
         UserDto user = new UserDto();
         user.setId(10L);
+        user.setAddressId(13L);
 
         Iterable<Rental> rentals = rentalService.findAllRentalsByUser(user);
-        assertEquals(2, ((List<Rental>) rentals).size());
+        assertEquals(4, ((List<Rental>) rentals).size());
+    }
+
+    @Test
+    public void shouldSaveRental(){
+        List<Rental> rentalsBeforeSave = rentalService.findAllRentals();
+        Rental rental = new Rental();
+        User user = new User();
+        user.setId(10L);
+        Car car = new Car();
+        car.setId(10L);
+        Location location = new Location();
+        location.setId(10L);
+        rental.setUser(user);
+        rental.setCar(car);
+        rental.setReturnPlace(location);
+        rental.setRentalPlace(location);
+        rental.setPlannedDate(LocalDate.of(2018, 10, 10));
+        rental.setRentalDate(LocalDate.of(2018, 10, 10));
+        rentalService.saveRental(rental);
+        List<Rental> rentalsAfterSave = rentalService.findAllRentals();
+        assertEquals(rentalsBeforeSave.size()+1, rentalsAfterSave.size());
     }
 }
