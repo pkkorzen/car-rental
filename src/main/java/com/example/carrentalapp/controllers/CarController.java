@@ -5,6 +5,7 @@ import com.example.carrentalapp.entities.*;
 import com.example.carrentalapp.entities.enums.Gearbox;
 import com.example.carrentalapp.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,15 +56,11 @@ public class CarController {
 
 //to wyglada na lepsze rozwiazanie z customRepository i jpql query aniżeli przerabianie danych z 2 tabel w javie
     @PostMapping("/available-cars")
-    public String showAvailableCars(Model model, @RequestParam(name="startDate") String startDate,
-                                    @RequestParam(name="endDate") String endDate,
-                                    @RequestParam(name="startLocation") String startLocation,
-                                    @RequestParam(name="endLocation") String endLocation,
+    public String showAvailableCars(Model model, @RequestParam(name="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                    @RequestParam(name="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+                                    @RequestParam(name="startLocation") Long startLocationId,
+                                    @RequestParam(name="endLocation") Long endLocationId,
                                     Authentication authentication){
-        LocalDate rentalDate = LocalDate.parse(startDate);
-        LocalDate returnDate = LocalDate.parse(endDate);
-        Long startLocationId = Long.parseLong(startLocation);
-        Long endLocationId = Long.parseLong(endLocation);
         Optional<Location> startLocationOptional = locationService.findLocationById(startLocationId);
         Optional<Location> endLocationOptional = locationService.findLocationById(endLocationId);
         Location rentalLocation = null;
@@ -76,11 +73,11 @@ public class CarController {
             model.addAttribute("endLocation", endLocationOptional.get());
             returnLocation = endLocationOptional.get();
         }
-        List<Car> cars = carService.findCarsAvailableByDatesAndLocation(rentalDate, returnDate, rentalLocation, returnLocation);
+        List<Car> cars = carService.findCarsAvailableByDatesAndLocation(startDate, endDate, rentalLocation, returnLocation);
         model.addAttribute("cars", cars);
         model.addAttribute("text", "Available");
-        model.addAttribute("startDate", rentalDate);
-        model.addAttribute("endDate", returnDate);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
         Optional<UserDto> userOptional = userService.findUserByLogin(authentication.getName());
         userOptional.ifPresent(user -> model.addAttribute("userRole", user.getRole()));
         return"cars/all-cars";

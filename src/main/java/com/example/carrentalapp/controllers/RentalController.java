@@ -10,6 +10,7 @@ import com.example.carrentalapp.services.LocationService;
 import com.example.carrentalapp.services.RentalService;
 import com.example.carrentalapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -122,9 +123,10 @@ public class RentalController {
     }
 
     @GetMapping("rentals/rental-confirmation/{id}/{startDate}/{endDate}/{startLocationId}/{endLocationId}")
-    public String confirmRental(@PathVariable Long id, @PathVariable String startDate, @PathVariable String endDate,
-                                @PathVariable Long startLocationId, @PathVariable Long endLocationId,
-                                Model model, Authentication authentication) {
+    public String confirmRental(@PathVariable Long id, Model model, Authentication authentication,
+                                @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+                                @PathVariable Long startLocationId, @PathVariable Long endLocationId) {
 
         Rental rental = new Rental();
 
@@ -133,15 +135,12 @@ public class RentalController {
         //do poprawki, jak przejdziemy na rentalDto to mozna wtedy tylko ID zostawic zamiast calego usera i konwersja niepotrzebna
         userOptional.ifPresent(userDto -> rental.setUser(userConverter.apply(userDto)));
 
-        LocalDate rentalDate = LocalDate.parse(startDate);
-        LocalDate plannedDate = LocalDate.parse(endDate);
-
         Optional<Location> rentalLocationOptional = locationService.findLocationById(startLocationId);
         rentalLocationOptional.ifPresent(rental::setRentalPlace);
         Optional<Location> returnLocationOptional = locationService.findLocationById(endLocationId);
         returnLocationOptional.ifPresent(rental::setReturnPlace);
-        rental.setRentalDate(rentalDate);
-        rental.setPlannedDate(plannedDate);
+        rental.setRentalDate(startDate);
+        rental.setPlannedDate(endDate);
 
         Optional<Car> carOptional = carService.findCarById(id);
         carOptional.ifPresent(rental::setCar);
