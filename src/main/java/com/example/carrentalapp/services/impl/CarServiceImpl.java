@@ -45,6 +45,13 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    public List<Car> findCarsAvailableByDatesAndLocation(LocalDate startDate, LocalDate endDate, Location startLocation, Location endLocation) {
+        //date is being added here since JPQL Query did not recognize function dateadd for H2
+        LocalDate nextDate = endDate.plusDays(1);
+        return carRepository.findCarsAvailableByDatesAndLocation(startDate, endDate, nextDate, startLocation, endLocation);
+    }
+
+    @Override
     public void saveCar(Car car) {
         carRepository.save(car);
     }

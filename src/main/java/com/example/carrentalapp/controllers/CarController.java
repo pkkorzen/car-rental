@@ -67,12 +67,16 @@ public class CarController {
         Optional<Location> startLocationOptional = locationService.findLocationById(startLocationId);
         Optional<Location> endLocationOptional = locationService.findLocationById(endLocationId);
         Location rentalLocation = null;
+        Location returnLocation = null;
         if(startLocationOptional.isPresent()){
             model.addAttribute("startLocation", startLocationOptional.get());
             rentalLocation = startLocationOptional.get();
         }
-        endLocationOptional.ifPresent(location -> model.addAttribute("endLocation", location));
-        List<Car> cars = carService.findCarsAvailableByDatesAndLocation(rentalDate, returnDate, rentalLocation);
+        if(endLocationOptional.isPresent()){
+            model.addAttribute("endLocation", endLocationOptional.get());
+            returnLocation = endLocationOptional.get();
+        }
+        List<Car> cars = carService.findCarsAvailableByDatesAndLocation(rentalDate, returnDate, rentalLocation, returnLocation);
         model.addAttribute("cars", cars);
         model.addAttribute("text", "Available");
         model.addAttribute("startDate", rentalDate);

@@ -63,6 +63,16 @@ public class CarServiceImplTest {
         Location location = new Location();
         location.setId(10L);
         List<Car> cars = carService.findCarsAvailableByDatesAndLocation(startDate, endDate, location);
+        assertEquals(2, cars.size());
+    }
+
+    @Test
+    public void shouldFindAvailableCarsByDatesAndLocationWhereTheCarIsNotRentedTheDayAfterInDifferentPlace(){
+        LocalDate startDate = LocalDate.of(2018, Month.NOVEMBER, 21);
+        LocalDate endDate = LocalDate.of(2018, Month.NOVEMBER,22);
+        Location location = new Location();
+        location.setId(10L);
+        List<Car> cars = carService.findCarsAvailableByDatesAndLocation(startDate, endDate, location, location);
         assertEquals(1, cars.size());
     }
 

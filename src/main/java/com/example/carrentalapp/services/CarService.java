@@ -12,6 +12,8 @@ public interface CarService {
     List<Car> findAllCars();
     List<Car> findCarsAvailableByDates(LocalDate startDate, LocalDate endDate);
     List<Car> findCarsAvailableByDatesAndLocation(LocalDate startDate, LocalDate endDate, Location location);
+    List<Car> findCarsAvailableByDatesAndLocation(LocalDate startDate, LocalDate endDate, Location startLocation,
+                                                  Location endLocation);
     void saveCar(Car car);
     void deleteCar(Long id);
 }
