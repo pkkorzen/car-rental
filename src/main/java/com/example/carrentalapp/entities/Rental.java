@@ -29,6 +29,9 @@ public class Rental {
     @ManyToOne
     @JoinColumn(name = "return_place")
     private Location returnPlace;
+    @ManyToOne
+    @JoinColumn(name = "id_status")
+    private RentalStatus rentalStatus;
 
     public Long getId() {
         return id;
@@ -92,5 +95,13 @@ public class Rental {
 
     public void setReturnPlace(Location returnPlace) {
         this.returnPlace = returnPlace;
+    }
+
+    public RentalStatus getRentalStatus() {
+        return rentalStatus;
+    }
+
+    public void setRentalStatus(RentalStatus rentalStatus) {
+        this.rentalStatus = rentalStatus;
     }
 }
