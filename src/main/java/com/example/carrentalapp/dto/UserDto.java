@@ -13,6 +13,7 @@ public class UserDto {
     private Integer number;
     private String city;
     private String zipCode;
+    private Long roleId;
     private String role;
 
     public String getRole() {
@@ -117,5 +118,13 @@ public class UserDto {
 
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
+    }
+
+    public Long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 }

@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface UserService {
     Optional<UserDto> findUserByLogin(String login);
+    Optional<UserDto> findUserByLoginAndPassword(String login, String password);
     Optional<UserDto> findUserById(Long id);
     List<UserDto> findAll();
     void save(UserDto userDto);

@@ -42,6 +42,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<UserDto> findUserByLoginAndPassword(String login, String password) {
+        Optional<User> userOptional = userRepository.findUserByLoginAndPassword(login, password);
+        return userOptional.map(user -> userDtoConverter.apply(user));
+    }
+
+    @Override
     public Optional<UserDto> findUserById(Long id) {
         Optional<User> userOptional = userRepository.findById(id);
         return userOptional.map(user -> userDtoConverter.apply(user));

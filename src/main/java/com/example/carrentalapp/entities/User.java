@@ -17,7 +17,9 @@ public class User {
     private String phone;
     private String login;
     private String password;
-    private String role;
+    @ManyToOne
+    @JoinColumn(name = "id_role")
+    private UserRole userRole;
 
     public Long getId() {
         return id;
@@ -83,12 +85,12 @@ public class User {
         this.login = login;
     }
 
-    public String getRole() {
-        return role;
+    public UserRole getUserRole() {
+        return userRole;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
     }
 
     @Override

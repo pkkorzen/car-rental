@@ -19,7 +19,8 @@ public class UserDtoConverter implements Function<User, UserDto> {
         userDto.setLogin(user.getLogin());
         userDto.setPhone(user.getPhone());
         userDto.setPassword(user.getPassword());
-        userDto.setRole(user.getRole());
+        userDto.setRole(user.getUserRole().getRole());
+        userDto.setRoleId(user.getUserRole().getId());
         userDto.setCity(user.getAddress().getCity());
         userDto.setStreet(user.getAddress().getStreet());
         userDto.setNumber(user.getAddress().getNumber());

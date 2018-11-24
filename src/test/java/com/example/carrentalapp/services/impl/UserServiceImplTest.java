@@ -46,4 +46,15 @@ public class UserServiceImplTest {
         List<UserDto> usersAfterSave = userService.findAll();
         assertEquals(usersBeforeSave.size()+1, usersAfterSave.size());
     }
+
+    @Test
+    public void shouldAssignDefaultRoleForNewUser(){
+        UserDto userDto = new UserDto();
+        userDto.setName("Adrian");
+        userDto.setSurname("Marcinski");
+        userDto.setCity("Wrocław");
+        userService.save(userDto);
+        List<UserDto> usersAfterSave = userService.findAll();
+        assertEquals("ROLE_USER", usersAfterSave.get(usersAfterSave.size()-1).getRole());
+    }
 }
