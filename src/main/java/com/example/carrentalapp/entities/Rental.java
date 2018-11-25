@@ -3,7 +3,6 @@ package com.example.carrentalapp.entities;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -19,8 +18,6 @@ public class Rental {
     private Car car;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate rentalDate;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate plannedDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate returnDate;
     @ManyToOne
@@ -63,14 +60,6 @@ public class Rental {
 
     public void setRentalDate(LocalDate rentalDate) {
         this.rentalDate = rentalDate;
-    }
-
-    public LocalDate getPlannedDate() {
-        return plannedDate;
-    }
-
-    public void setPlannedDate(LocalDate plannedDate) {
-        this.plannedDate = plannedDate;
     }
 
     public LocalDate getReturnDate() {

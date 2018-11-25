@@ -92,16 +92,16 @@ public class RentalController {
         rentalOptional.ifPresent(rental -> model.addAttribute("rental", rental));
 
         LocalDate rentalDate = LocalDate.now();
-        LocalDate plannedDate = rentalDate.plus(1, ChronoUnit.DAYS);
+        LocalDate returnDate = rentalDate.plus(1, ChronoUnit.DAYS);
 
         if (rentalOptional.isPresent()) {
             Rental rental = rentalOptional.get();
             model.addAttribute("rental", rental);
             rentalDate = rental.getRentalDate();
-            plannedDate = rental.getPlannedDate();
+            returnDate = rental.getReturnDate();
         }
 
-        List<Car> cars = carService.findCarsAvailableByDates(rentalDate, plannedDate);
+        List<Car> cars = carService.findCarsAvailableByDates(rentalDate, returnDate);
         Optional<UserDto> userOptional = userService.findUserByLogin(authentication.getName());
         userOptional.ifPresent(user -> model.addAttribute("userRole", user.getRole()));
         model.addAttribute("users", users);
@@ -140,7 +140,7 @@ public class RentalController {
         Optional<Location> returnLocationOptional = locationService.findLocationById(endLocationId);
         returnLocationOptional.ifPresent(rental::setReturnPlace);
         rental.setRentalDate(startDate);
-        rental.setPlannedDate(endDate);
+        rental.setReturnDate(endDate);
 
         Optional<Car> carOptional = carService.findCarById(id);
         carOptional.ifPresent(rental::setCar);

@@ -3,7 +3,6 @@ package com.example.carrentalapp.services.impl;
 import com.example.carrentalapp.converters.UserConverter;
 import com.example.carrentalapp.dto.UserDto;
 import com.example.carrentalapp.entities.Rental;
-import com.example.carrentalapp.entities.User;
 import com.example.carrentalapp.repositories.RentalRepository;
 import com.example.carrentalapp.services.RentalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,7 @@ public class RentalServiceImpl implements RentalService {
 
     @Override
     public List<Rental> findRentalsByDateBetween(LocalDate startDate, LocalDate endDate) {
-        Iterable<Rental> rentals = rentalRepository.findAllByRentalDateBeforeAndPlannedDateAfter(endDate, startDate);
+        Iterable<Rental> rentals = rentalRepository.findAllByRentalDateBeforeAndReturnDateAfter(endDate, startDate);
         return StreamSupport.stream(rentals.spliterator(), true).collect(Collectors.toList());
     }
 
