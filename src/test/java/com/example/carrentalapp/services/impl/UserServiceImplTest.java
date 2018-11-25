@@ -36,6 +36,12 @@ public class UserServiceImplTest {
     }
 
     @Test
+    public void shouldFindUserByLoginAndPassword() {
+        UserDto userDto = userService.findUserByLoginAndPassword("janek", "bomba").get();
+        assertEquals("Kowalski",userDto.getSurname());
+    }
+
+    @Test
     public void shouldSaveUser() {
         List<UserDto> usersBeforeSave = userService.findAll();
         UserDto userDto = new UserDto();
