@@ -3,7 +3,6 @@ package com.example.carrentalapp.entities;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -20,8 +19,6 @@ public class Rental {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate rentalDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate plannedDate;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate returnDate;
     @ManyToOne
     @JoinColumn(name = "rental_place")
@@ -29,6 +26,9 @@ public class Rental {
     @ManyToOne
     @JoinColumn(name = "return_place")
     private Location returnPlace;
+    @ManyToOne
+    @JoinColumn(name = "id_status")
+    private RentalStatus rentalStatus;
 
     public Long getId() {
         return id;
@@ -62,14 +62,6 @@ public class Rental {
         this.rentalDate = rentalDate;
     }
 
-    public LocalDate getPlannedDate() {
-        return plannedDate;
-    }
-
-    public void setPlannedDate(LocalDate plannedDate) {
-        this.plannedDate = plannedDate;
-    }
-
     public LocalDate getReturnDate() {
         return returnDate;
     }
@@ -92,5 +84,13 @@ public class Rental {
 
     public void setReturnPlace(Location returnPlace) {
         this.returnPlace = returnPlace;
+    }
+
+    public RentalStatus getRentalStatus() {
+        return rentalStatus;
+    }
+
+    public void setRentalStatus(RentalStatus rentalStatus) {
+        this.rentalStatus = rentalStatus;
     }
 }

@@ -18,6 +18,7 @@ public class Car {
     private Gearbox gearbox;
     private Integer capacity;
     private Integer year;
+    private boolean available;
     @ManyToOne
     @JoinColumn(name ="id_type")
     private Type type;
@@ -92,6 +93,14 @@ public class Car {
 
     public void setYear(Integer year) {
         this.year = year;
+    }
+
+    public boolean getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 
     @Override

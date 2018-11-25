@@ -66,7 +66,7 @@ public class RentalServiceImplTest {
         rental.setCar(car);
         rental.setReturnPlace(location);
         rental.setRentalPlace(location);
-        rental.setPlannedDate(LocalDate.of(2018, 10, 10));
+        rental.setReturnDate(LocalDate.of(2018, 10, 10));
         rental.setRentalDate(LocalDate.of(2018, 10, 10));
         rentalService.saveRental(rental);
         List<Rental> rentalsAfterSave = rentalService.findAllRentals();
