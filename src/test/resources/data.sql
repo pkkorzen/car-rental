@@ -25,7 +25,8 @@ INSERT INTO car (id, make, model, reg_number, door_number, gearbox, capacity, ye
 (11, 'Ford', 'Fiesta', 'BGD1269', 3, 'M', 5, 2015, 10, true),
 (12, 'Mazda', 'Mx6', 'WAW1233', 3, 'M', 5, 2016, 11, true),
 (13, 'Subaru', 'Impreza', 'ASL2233', 5, 'M', 4, 2018, 12, true),
-(14, 'Seat', 'Ateca', 'DL24321', 5, 'M', 5, 2018, 12, false);
+(14, 'Seat', 'Ateca', 'DL24321', 5, 'M', 5, 2018, 12, false),
+(15, 'Toyota', 'Supra', 'DL24321', 5, 'M', 5, 2018, 12, true);
 
 INSERT INTO user (id, name, surname, id_address, mail, phone, login, password, role) VALUES
 (10, 'Jan', 'Kowalski', 13, 'j@malpa.pl', '555123443', 'janek', 'bomba', 'ROLE_ADMIN'),

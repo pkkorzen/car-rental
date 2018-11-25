@@ -75,7 +75,7 @@ public class CarServiceImplTest {
         Location location = new Location();
         location.setId(10L);
         List<Car> cars = carService.findCarsAvailableByDatesAndLocation(startDate, endDate, location, location);
-        assertEquals(1, cars.size());
+        assertEquals(2, cars.size());
     }
 
     @Test
@@ -86,7 +86,7 @@ public class CarServiceImplTest {
         Location location = new Location();
         location.setId(11L);
         List<Car> cars = carService.findCarsAvailableByDatesAndLocation(startDate, endDate, location, location);
-        assertEquals(1, cars.size());
+        assertEquals(2, cars.size());
     }
 
     @Test
@@ -120,6 +120,22 @@ public class CarServiceImplTest {
         location.setId(10L);
         List<Car> cars = carService.findCarsAvailableByDatesAndLocation(startDate, endDate, location, location);
         System.out.println(cars.get(0).toString());
-        assertEquals(2, cars.size());
+        assertEquals(3, cars.size());
+    }
+
+    @Test
+    public void shouldIncludeCarsThatAreNotOnRentalsList(){
+        //TODO: dopisać samochód, którego nie ma na liście rentali i pokazać, że go wyszukuje
+        LocalDate startDate = LocalDate.of(2018, Month.NOVEMBER, 26);
+        LocalDate endDate = LocalDate.of(2018, Month.NOVEMBER,28);
+        Location location = new Location();
+        location.setId(11L);
+        List<Car> cars = carService.findCarsAvailableByDatesAndLocation(startDate, endDate, location, location);
+        Map<Long, Car> carsMap = new HashMap<>();
+        for(Car car: cars){
+            carsMap.put(car.getId(), car);
+        }
+        Car carNotInRentalsYet = carsMap.get(15L);
+        assertNotNull(carNotInRentalsYet);
     }
 }
