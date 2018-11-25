@@ -14,7 +14,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
@@ -76,4 +78,48 @@ public class CarServiceImplTest {
         assertEquals(1, cars.size());
     }
 
+    @Test
+    public void shouldNotIncludeRentedCarsWithExpiredReturnDate(){
+        //TODO: dopisać samochód do bazy, który mimo daty return w przeszłości wciąż pozostaje jako rented i uzupełnić ten test
+        LocalDate startDate = LocalDate.of(2018, Month.NOVEMBER, 25);
+        LocalDate endDate = LocalDate.of(2018, Month.NOVEMBER,27);
+        Location location = new Location();
+        location.setId(11L);
+        List<Car> cars = carService.findCarsAvailableByDatesAndLocation(startDate, endDate, location, location);
+        assertEquals(1, cars.size());
+    }
+
+    @Test
+    public void shouldNotConsiderCancelledRentals(){
+        //TODO: dopisać jakiś cancelled rental i wbić test pokazujący, że go znajduje (np. wyszukać potem w liście ten samochód)
+        // to w sumie jest ogarniane przez test w 71 linijce
+    }
+
+    @Test
+    public void shouldNotIncludeNotAvailableCars(){
+        //TODO: dopisać samochód z false availability i pokazać, że go nie wyszukuje lub odwrotnie, że wyszukuje tylko available
+        LocalDate startDate = LocalDate.of(2018, Month.NOVEMBER, 25);
+        LocalDate endDate = LocalDate.of(2018, Month.NOVEMBER,27);
+        Location location = new Location();
+        location.setId(11L);
+        List<Car> cars = carService.findCarsAvailableByDatesAndLocation(startDate, endDate, location, location);
+        Map<Long, Car> carsMap = new HashMap<>();
+        for(Car car: cars){
+            carsMap.put(car.getId(), car);
+        }
+        Car carOffline = carsMap.get(14L);
+        assertNull(carOffline);
+    }
+
+    @Test
+    public void shouldIncludeCarIfCancelledRentalIsFromDifferentLocationTheDayAfter(){
+        //TODO: ewnentualnie dopisać test, gdzie samochód jest zarezerwowany następnego dnia po oddaniu w innej lokalizacji, ale jest na tym cancel
+        LocalDate startDate = LocalDate.of(2018, Month.NOVEMBER, 25);
+        LocalDate endDate = LocalDate.of(2018, Month.NOVEMBER,27);
+        Location location = new Location();
+        location.setId(10L);
+        List<Car> cars = carService.findCarsAvailableByDatesAndLocation(startDate, endDate, location, location);
+        System.out.println(cars.get(0).toString());
+        assertEquals(2, cars.size());
+    }
 }
