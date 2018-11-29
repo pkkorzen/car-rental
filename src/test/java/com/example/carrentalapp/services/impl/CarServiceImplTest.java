@@ -138,4 +138,20 @@ public class CarServiceImplTest {
         Car carNotInRentalsYet = carsMap.get(15L);
         assertNotNull(carNotInRentalsYet);
     }
+
+    @Test
+    public void shouldNotIncludeNotAvailableCarsWithCancelledRental(){
+        //TODO: dopisać samochód z false availability i pokazać, że go nie wyszukuje lub odwrotnie, że wyszukuje tylko available
+        LocalDate startDate = LocalDate.of(2018, Month.NOVEMBER, 25);
+        LocalDate endDate = LocalDate.of(2018, Month.NOVEMBER,27);
+        Location location = new Location();
+        location.setId(11L);
+        List<Car> cars = carService.findCarsAvailableByDatesAndLocation(startDate, endDate, location, location);
+        Map<Long, Car> carsMap = new HashMap<>();
+        for(Car car: cars){
+            carsMap.put(car.getId(), car);
+        }
+        Car carOffline = carsMap.get(16L);
+        assertNull(carOffline);
+    }
 }

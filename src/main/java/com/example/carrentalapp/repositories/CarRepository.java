@@ -28,7 +28,8 @@ public interface CarRepository extends CrudRepository<Car, Long> {
             "(SELECT ca.id FROM Car ca LEFT JOIN Rental r ON ca.id = r.car.id " +
             "WHERE r.rentalDate = :nextDate AND r.rentalPlace <> :endLocation AND r.rentalStatus.status = 'reserved')" +
             "AND c.available = true " +
-            "OR c.id IN (SELECT ca.id FROM Car ca LEFT JOIN Rental r ON ca.id = r.car.id WHERE r.car.id is null)")
+            "OR c.id IN (SELECT ca.id FROM Car ca LEFT JOIN Rental r ON ca.id = r.car.id WHERE r.car.id is null AND ca.available = true)" +
+            "OR c.id NOT IN (SELECT ca.id FROM Car ca LEFT JOIN Rental r ON ca.id = r.car.id WHERE r.rentalStatus.status <> 'cancelled') AND c.available = true")
     List<Car> findCarsAvailableByDatesAndLocation(@Param("startDate") LocalDate startDate,
                                                   @Param("endDate")LocalDate endDate,
                                                   @Param("nextDate")LocalDate nextDate,

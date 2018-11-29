@@ -30,7 +30,8 @@ INSERT INTO car (id, make, model, reg_number, door_number, gearbox, capacity, ye
 (12, 'Mazda', 'Mx6', 'WAW1233', 3, 'M', 5, 2016, 11, true),
 (13, 'Subaru', 'Impreza', 'ASL2233', 5, 'M', 4, 2018, 12, true),
 (14, 'Seat', 'Ateca', 'DL24321', 5, 'M', 5, 2018, 12, false),
-(15, 'Toyota', 'Supra', 'DL24321', 5, 'M', 5, 2018, 12, true);
+(15, 'Toyota', 'Supra', 'DL24321', 5, 'M', 5, 2018, 12, true),
+(16, 'Renault', 'Clio', 'WAW8764', 5, 'M', 5, 2018, 10, false);
 
 INSERT INTO user (id, name, surname, id_address, mail, phone, login, password, id_role) VALUES
 (10, 'Jan', 'Kowalski', 13, 'j@malpa.pl', '555123443', 'janek', 'bomba', 11),
@@ -45,4 +46,5 @@ INSERT INTO rental (id, id_user, id_car, rental_date, return_date, rental_place,
 (15, 10, 10, '2018-11-21', '2018-11-22', 10, 10, 13),
 (16, 10, 13, '2018-11-21', '2018-11-22', 10, 11, 12),
 (17, 10, 14, '2018-11-15', '2018-11-22', 11, 11, 10),
-(18, 10, 10, '2018-11-28', '2018-11-29', 12, 10, 13);
+(18, 10, 10, '2018-11-28', '2018-11-29', 12, 10, 13),
+(19, 10, 16, '2018-11-28', '2018-11-29', 12, 10, 13);
