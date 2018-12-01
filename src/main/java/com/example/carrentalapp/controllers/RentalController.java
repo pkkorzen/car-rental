@@ -5,10 +5,8 @@ import com.example.carrentalapp.dto.UserDto;
 import com.example.carrentalapp.entities.Car;
 import com.example.carrentalapp.entities.Location;
 import com.example.carrentalapp.entities.Rental;
-import com.example.carrentalapp.services.CarService;
-import com.example.carrentalapp.services.LocationService;
-import com.example.carrentalapp.services.RentalService;
-import com.example.carrentalapp.services.UserService;
+import com.example.carrentalapp.entities.RentalStatus;
+import com.example.carrentalapp.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
@@ -28,16 +26,18 @@ public class RentalController {
     private UserService userService;
     private CarService carService;
     private LocationService locationService;
+    private RentalStatusService rentalStatusService;
 
     @Autowired
     private UserConverter userConverter;
 
     @Autowired
-    public RentalController(RentalService rentalService, UserService userService, CarService carService, LocationService locationService) {
+    public RentalController(RentalService rentalService, UserService userService, CarService carService, LocationService locationService, RentalStatusService rentalStatusService) {
         this.rentalService = rentalService;
         this.userService = userService;
         this.carService = carService;
         this.locationService = locationService;
+        this.rentalStatusService = rentalStatusService;
     }
 
     @GetMapping("/all-rentals")
@@ -48,6 +48,7 @@ public class RentalController {
 
         if (userOptional.isPresent()) {
             userDto = userOptional.get();
+            model.addAttribute("userRole", userDto.getRole());
         }
 
         List<Rental> rentals;
@@ -141,12 +142,13 @@ public class RentalController {
         returnLocationOptional.ifPresent(rental::setReturnPlace);
         rental.setRentalDate(startDate);
         rental.setReturnDate(endDate);
+        Optional<RentalStatus> rentalStatusOptional = rentalStatusService.findRentalStatusById(11L);
+        rentalStatusOptional.ifPresent(rental::setRentalStatus);
 
         Optional<Car> carOptional = carService.findCarById(id);
         carOptional.ifPresent(rental::setCar);
 
         model.addAttribute("rental", rental);
         return "rentals/rental-confirmation";
-
     }
 }

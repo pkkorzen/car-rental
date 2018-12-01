@@ -1,34 +1,72 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="/css/styles.css" rel="stylesheet" type="text/css"/>
     <title>Rentals</title>
+    <style>
+        .jumbotron {
+            padding-top: 60px;
+            padding-bottom: 60px;
+            margin-bottom: 0;
+        }
+    </style>
 </head>
 <body>
-<h2 th:text="${text} + ' rentals' ">All rentals: </h2>
-<table>
-    <thead>
-    <tr>
-        <th>User</th>
-        <th>Car</th>
-        <th>Rental Date</th>
-        <th>Planned Date</th>
-        <th>Return Date</th>
-        <th>Edit</th>
-        <th>Delete</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="rental : ${rentals}">
-        <td th:text="${rental.user.name} + ' ' + ${rental.user.surname}">Alabastrowa</td>
-        <td th:text="${rental.car.make} + ' ' + ${rental.car.model}">30</td>
-        <td th:text="${rental.rentalDate}">00-001</td>
-        <td th:text="${rental.returnDate}">Warsaw</td>
-        <td><a th:href="@{'/rentals/edit/' + ${rental.id}}">Edit</a> </td>
-        <td><a th:href="@{'/rentals/delete-confirmation/' + ${rental.id}}">Delete</a> </td>
-    </tr>
-    </tbody>
-</table>
-
+<div class="container">
+    <header th:include="menu.html">
+    </header>
+    <div class="jumbotron">
+        <h2 th:text="${text} + ' rentals' ">All rentals: </h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th th:if="${userRole.equals('ROLE_ADMIN')}" scope="col">User</th>
+                <th scope="col">Car</th>
+                <th scope="col">Rental Date</th>
+                <th scope="col">Return Date</th>
+                <th scope="col">Rental Location</th>
+                <th scope="col">Return Location</th>
+                <th scope="col">Status</th>
+                <th th:if="${userRole.equals('ROLE_ADMIN')}" scope="col">Edit</th>
+                <th scope="col">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="rental : ${rentals}">
+                <td th:if="${userRole.equals('ROLE_ADMIN')}" th:text="${rental.user.name} + ' ' + ${rental.user.surname}">Alabastrowa</td>
+                <td th:text="${rental.car.make} + ' ' + ${rental.car.model}">30</td>
+                <td th:text="${rental.rentalDate}">00-001</td>
+                <td th:text="${rental.returnDate}">Warsaw</td>
+                <td th:text="${rental.rentalPlace.city} + ', ' + ${rental.rentalPlace.street}+ ' ' + ${rental.rentalPlace.number}">Warsaw</td>
+                <td th:text="${rental.returnPlace.city} + ', ' + ${rental.returnPlace.street} + ' ' + ${rental.returnPlace.number}">Warsaw</td>
+                <td th:text="${rental.rentalStatus.status}">Warsaw</td>
+                <td th:if="${userRole.equals('ROLE_ADMIN')}"><a th:href="@{'/rentals/edit/' + ${rental.id}}">Edit</a></td>
+                <td><a th:href="@{'/rentals/delete-confirmation/' + ${rental.id}}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer th:include="menu.html"></footer>
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
 </body>
 </html>

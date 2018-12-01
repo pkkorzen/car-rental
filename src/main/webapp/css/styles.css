@@ -1,0 +1,16 @@
+	header nav, footer nav{
+	background-color:#1a75ff;
+	color:white;
+	}
+	
+	footer nav a:link, footer nav a:visited, header nav a:link, header nav a:visited{
+	color: white;
+	}
+
+	footer nav a:hover, header nav a:hover{
+	background-color:#66a3ff;
+	}
+
+	thead h4 {
+		text-align: center;
+	}

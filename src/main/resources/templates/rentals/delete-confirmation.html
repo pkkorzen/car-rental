@@ -6,7 +6,7 @@
     <title>Delete confirmation</title>
 </head>
 <body>
-<h2>Do you really want to delete car:</h2>
+<h2>Do you really want to delete rental:</h2>
 <h2 th:text="${rentalToAsk.id} + ' ' + ${rentalToAsk.car.make} + ', ' + ${rentalToAsk.car.model} + ', ' + ${rentalToAsk.rentalDate} + ', ' + ${rentalToAsk.returnDate} + '?'"></h2>
 <a th:href="@{'/rentals/delete/' + ${rentalToAsk.id}}">Yes</a>&nbsp;&nbsp;<a th:href="@{/all-cars}">No</a>
 </body>
