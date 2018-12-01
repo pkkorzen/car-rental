@@ -1,13 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="/css/styles.css" rel="stylesheet" type="text/css"/>
     <title>Delete confirmation</title>
+    <style>
+        .jumbotron {
+            padding-top: 60px;
+            padding-bottom: 60px;
+            margin-bottom: 0;
+        }
+    </style>
 </head>
 <body>
-<h2>Do you really want to cancel rental:</h2>
-<h2 th:text="${rentalToAsk.id} + ' ' + ${rentalToAsk.car.make} + ', ' + ${rentalToAsk.car.model} + ', ' + ${rentalToAsk.rentalDate} + ', ' + ${rentalToAsk.returnDate} + '?'"></h2>
-<a th:href="@{'/rentals/cancel/' + ${rentalToAsk.id}}">Yes</a>&nbsp;&nbsp;<a th:href="@{/all-cars}">No</a>
+<div class="container">
+    <header th:include="menu.html">
+    </header>
+    <div class="jumbotron">
+        <h2>Do you really want to cancel rental:</h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Car</th>
+                <th scope="col">Rental Date</th>
+                <th scope="col">Return Date</th>
+                <th scope="col">Rental Location</th>
+                <th scope="col">Return Location</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${rentalToAsk.car.make} + ' ' + ${rentalToAsk.car.model}">30</td>
+                <td th:text="${rentalToAsk.rentalDate}">00-001</td>
+                <td th:text="${rentalToAsk.returnDate}">Warsaw</td>
+                <td th:text="${rentalToAsk.rentalPlace.city} + ', ' + ${rentalToAsk.rentalPlace.street}+ ' ' + ${rentalToAsk.rentalPlace.number}">Warsaw</td>
+                <td th:text="${rentalToAsk.returnPlace.city} + ', ' + ${rentalToAsk.returnPlace.street} + ' ' + ${rentalToAsk.returnPlace.number}">Warsaw</td>
+            </tr>
+            </tbody>
+        </table>
+        <h4><a th:href="@{'/rentals/cancel/' + ${rentalToAsk.id}}">Yes</a>&nbsp;&nbsp;<a th:href="@{/all-rentals}">No</a></h4>
+    </div>
+    <footer th:include="menu.html"></footer>
+</div>
 </body>
 </html>
