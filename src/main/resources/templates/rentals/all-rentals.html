@@ -37,7 +37,7 @@
                 <th scope="col">Return Location</th>
                 <th scope="col">Status</th>
                 <th th:if="${userRole.equals('ROLE_ADMIN')}" scope="col">Edit</th>
-                <th scope="col">Delete</th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -50,7 +50,8 @@
                 <td th:text="${rental.returnPlace.city} + ', ' + ${rental.returnPlace.street} + ' ' + ${rental.returnPlace.number}">Warsaw</td>
                 <td th:text="${rental.rentalStatus.status}">Warsaw</td>
                 <td th:if="${userRole.equals('ROLE_ADMIN')}"><a th:href="@{'/rentals/edit/' + ${rental.id}}">Edit</a></td>
-                <td><a th:href="@{'/rentals/delete-confirmation/' + ${rental.id}}">Delete</a></td>
+                <td th:if="${rental.rentalStatus.status.equals('reserved')}"><a th:href="@{'/rentals/cancel-confirmation/' + ${rental.id}}">Cancel</a></td>
+                <td th:unless="${rental.rentalStatus.status.equals('reserved')}"></td>
             </tr>
             </tbody>
         </table>

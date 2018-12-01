@@ -151,4 +151,23 @@ public class RentalController {
         model.addAttribute("rental", rental);
         return "rentals/rental-confirmation";
     }
+
+    @GetMapping("rentals/cancel-confirmation/{id}")
+    public String cancelConfirmation(@PathVariable Long id, Model model) {
+        Optional<Rental> rentalOptional = rentalService.findRentalById(id);
+        rentalOptional.ifPresent(rental -> model.addAttribute("rentalToAsk", rental));
+        return "rentals/cancel-confirmation";
+    }
+
+    @GetMapping("rentals/cancel/{id}")
+    public String cancelRental(@PathVariable Long id) {
+        Optional<Rental> rentalOptional = rentalService.findRentalById(id);
+        if(rentalOptional.isPresent()){
+            Rental rental = rentalOptional.get();
+            Optional<RentalStatus> rentalStatusOptional = rentalStatusService.findRentalStatusById(13L);
+            rentalStatusOptional.ifPresent(rental::setRentalStatus);
+            rentalService.saveRental(rental);
+        }
+        return "redirect:/all-rentals";
+    }
 }
