@@ -2,42 +2,80 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="/css/styles.css" rel="stylesheet" type="text/css"/>
     <title>Cars</title>
+    <style>
+        .jumbotron {
+            padding-top: 60px;
+            padding-bottom: 60px;
+            margin-bottom: 0;
+        }
+    </style>
 </head>
 <body>
-<h2 th:text="${text} + ' cars'">cars: </h2>
-<h2 th th:if="${startDate!=null}" th:text="'between: ' + ${startDate} + ' - ' + ${endDate} + ' in ' + ${startLocation.city} + ', ' + ${startLocation.street} + ' ' + ${startLocation.number}"></h2>
-<table>
-    <thead>
-    <tr>
-        <th>Make</th>
-        <th>Model</th>
-        <th>Registration Number</th>
-        <th>Door Number</th>
-        <th>Gearbox</th>
-        <th>Capacity</th>
-        <th>Year</th>
-        <th>Type</th>
-        <th th:if="${userRole.equals('ROLE_ADMIN')}">Edit</th>
-        <th th:if="${userRole.equals('ROLE_ADMIN')}">Delete</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="car : ${cars}">
-        <td th:text="${car.make}">Alabastrowa</td>
-        <td th:text="${car.model}">30</td>
-        <td th:text="${car.regNumber}">00-001</td>
-        <td th:text="${car.doorNumber}">Warsaw</td>
-        <td th:text="${car.gearbox}">Warsaw</td>
-        <td th:text="${car.capacity}">Warsaw</td>
-        <td th:text="${car.year}">Warsaw</td>
-        <td th:text="${car.type.type}">Warsaw</td>
-        <td th:if="${userRole.equals('ROLE_ADMIN')}"><a th:href="@{'/cars/edit/' + ${car.id}}">Edit</a> </td>
-        <td th:if="${userRole.equals('ROLE_ADMIN')}"><a th:href="@{'/cars/delete-confirmation/' + ${car.id}}">Delete</a> </td>
-        <td th:if="${startDate!=null}"><a th:href="@{'/rentals/rental-confirmation/' + ${car.id} + '/' + ${startDate} + '/' + ${endDate}+ '/' + ${startLocation.id}+ '/' + ${endLocation.id} }">Rent</a> </td>
-    </tr>
-    </tbody>
-</table>
-
+<div class="container">
+    <header th:include="menu.html">
+    </header>
+    <div class="jumbotron">
+        <h2 th:text="${text} + ' cars'">cars: </h2>
+        <h2 th:if="${startDate!=null}"
+            th:text="'between: ' + ${startDate} + ' - ' + ${endDate} + ' in ' + ${startLocation.city} + ', ' + ${startLocation.street} + ' ' + ${startLocation.number}"></h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Make</th>
+                <th scope="col">Model</th>
+                <th scope="col">Registration Number</th>
+                <th scope="col">Door Number</th>
+                <th scope="col">Gearbox</th>
+                <th scope="col">Capacity</th>
+                <th scope="col">Year</th>
+                <th scope="col">Type</th>
+                <th scope="col" th:if="${userRole.equals('ROLE_ADMIN')}">Edit</th>
+                <th scope="col" th:if="${userRole.equals('ROLE_ADMIN')}">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="car : ${cars}">
+                <td th:text="${car.make}">Alabastrowa</td>
+                <td th:text="${car.model}">30</td>
+                <td th:text="${car.regNumber}">00-001</td>
+                <td th:text="${car.doorNumber}">Warsaw</td>
+                <td th:text="${car.gearbox}">Warsaw</td>
+                <td th:text="${car.capacity}">Warsaw</td>
+                <td th:text="${car.year}">Warsaw</td>
+                <td th:text="${car.type.type}">Warsaw</td>
+                <td th:if="${userRole.equals('ROLE_ADMIN')}"><a th:href="@{'/cars/edit/' + ${car.id}}">Edit</a></td>
+                <td th:if="${userRole.equals('ROLE_ADMIN')}"><a
+                        th:href="@{'/cars/delete-confirmation/' + ${car.id}}">Delete</a></td>
+                <td th:if="${startDate!=null}"><a
+                        th:href="@{'/rentals/rental-confirmation/' + ${car.id} + '/' + ${startDate} + '/' + ${endDate}+ '/' + ${startLocation.id}+ '/' + ${endLocation.id} }">Rent</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer th:include="menu.html"></footer>
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
 </body>
 </html>
