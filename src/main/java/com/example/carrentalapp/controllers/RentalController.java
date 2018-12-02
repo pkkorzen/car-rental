@@ -75,7 +75,7 @@ public class RentalController {
         return "redirect:/all-rentals";
     }
 
-    //ten chyba do wyrzucenia, nie będziemy raczej chcieli dodawać rentali w ten sposób
+    //ten chyba do wyrzucenia, nie będziemy raczej dodawać rentali w ten sposób
     @GetMapping("rentals/add")
     public String addRental(Model model) {
         model.addAttribute("text", "Add");
@@ -133,7 +133,7 @@ public class RentalController {
 
         String login = authentication.getName();
         Optional<UserDto> userOptional = userService.findUserByLogin(login);
-        //do poprawki, jak przejdziemy na rentalDto to mozna wtedy tylko ID zostawic zamiast calego usera i konwersja niepotrzebna
+
         userOptional.ifPresent(userDto -> rental.setUser(userConverter.apply(userDto)));
 
         Optional<Location> rentalLocationOptional = locationService.findLocationById(startLocationId);

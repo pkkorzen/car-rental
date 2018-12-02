@@ -80,7 +80,6 @@ public class CarServiceImplTest {
 
     @Test
     public void shouldNotIncludeRentedCarsWithExpiredReturnDate(){
-        //TODO: dopisać samochód do bazy, który mimo daty return w przeszłości wciąż pozostaje jako rented i uzupełnić ten test
         LocalDate startDate = LocalDate.of(2018, Month.NOVEMBER, 25);
         LocalDate endDate = LocalDate.of(2018, Month.NOVEMBER,27);
         Location location = new Location();
@@ -90,14 +89,7 @@ public class CarServiceImplTest {
     }
 
     @Test
-    public void shouldNotConsiderCancelledRentals(){
-        //TODO: dopisać jakiś cancelled rental i wbić test pokazujący, że go znajduje (np. wyszukać potem w liście ten samochód)
-        // to w sumie jest ogarniane przez test w 71 linijce
-    }
-
-    @Test
     public void shouldNotIncludeNotAvailableCars(){
-        //TODO: dopisać samochód z false availability i pokazać, że go nie wyszukuje lub odwrotnie, że wyszukuje tylko available
         LocalDate startDate = LocalDate.of(2018, Month.NOVEMBER, 25);
         LocalDate endDate = LocalDate.of(2018, Month.NOVEMBER,27);
         Location location = new Location();
@@ -113,7 +105,6 @@ public class CarServiceImplTest {
 
     @Test
     public void shouldIncludeCarIfCancelledRentalIsFromDifferentLocationTheDayAfter(){
-        //TODO: ewnentualnie dopisać test, gdzie samochód jest zarezerwowany następnego dnia po oddaniu w innej lokalizacji, ale jest na tym cancel
         LocalDate startDate = LocalDate.of(2018, Month.NOVEMBER, 25);
         LocalDate endDate = LocalDate.of(2018, Month.NOVEMBER,27);
         Location location = new Location();
@@ -125,7 +116,6 @@ public class CarServiceImplTest {
 
     @Test
     public void shouldIncludeCarsThatAreNotOnRentalsList(){
-        //TODO: dopisać samochód, którego nie ma na liście rentali i pokazać, że go wyszukuje
         LocalDate startDate = LocalDate.of(2018, Month.NOVEMBER, 26);
         LocalDate endDate = LocalDate.of(2018, Month.NOVEMBER,28);
         Location location = new Location();
@@ -141,7 +131,6 @@ public class CarServiceImplTest {
 
     @Test
     public void shouldNotIncludeNotAvailableCarsWithCancelledRental(){
-        //TODO: dopisać samochód z false availability i pokazać, że go nie wyszukuje lub odwrotnie, że wyszukuje tylko available
         LocalDate startDate = LocalDate.of(2018, Month.NOVEMBER, 25);
         LocalDate endDate = LocalDate.of(2018, Month.NOVEMBER,27);
         Location location = new Location();

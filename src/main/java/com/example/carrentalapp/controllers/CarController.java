@@ -19,15 +19,14 @@ import java.util.Optional;
 public class CarController {
 
     private CarService carService;
-    private RentalService rentalService;
     private TypeService typeService;
     private UserService userService;
     private LocationService locationService;
 
     @Autowired
-    public CarController(CarService carService, RentalService rentalService, TypeService typeService, UserService userService, LocationService locationService){
+    public CarController(CarService carService, TypeService typeService, UserService userService,
+                         LocationService locationService){
         this.carService = carService;
-        this.rentalService = rentalService;
         this.typeService = typeService;
         this.userService = userService;
         this.locationService = locationService;
@@ -43,18 +42,6 @@ public class CarController {
         return "cars/fleet";
     }
 
-/*    @GetMapping("/available-cars")
-    public String showAvailableCars(Model model, @RequestParam(name="startDate") LocalDate startDate,
-                                    @RequestParam(name="endDate") LocalDate endDate){
-        List<Car> cars = carService.findAllCars();
-        List<Rental> rentals = rentalService.findRentalsByDateBetween(startDate, endDate);
-        List<Car> rentedCars = rentals.stream().map(Rental::getCar).collect(Collectors.toList());
-        cars.removeAll(rentedCars);
-        model.addAttribute("cars", cars);
-        return"/available-cars";
-    }*/
-
-//to wyglada na lepsze rozwiazanie z customRepository i jpql query aniżeli przerabianie danych z 2 tabel w javie
     @PostMapping("/available-cars")
     public String showAvailableCars(Model model, @RequestParam(name="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
                                     @RequestParam(name="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
@@ -129,10 +116,4 @@ public class CarController {
         return "cars/all-cars";
     }
 
-    @GetMapping("/")
-    public String index(Model model){
-        List<Location> locations = locationService.findAllLocations();
-        model.addAttribute("locations", locations);
-        return "../static/index";
-    }
 }

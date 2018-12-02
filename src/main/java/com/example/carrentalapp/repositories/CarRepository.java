@@ -18,12 +18,12 @@ public interface CarRepository extends CrudRepository<Car, Long> {
 
     @Query(value = "SELECT c FROM Car c WHERE c.id NOT IN " +
             "(SELECT ca.id FROM Car ca LEFT JOIN Rental r ON ca.id = r.car.id " +
-            "WHERE (r.rentalDate < :endDate AND r.returnDate > :startDate AND r.rentalStatus.status <> 'cancelled') OR r.rentalStatus.status = 'rented') " +
+            "WHERE (r.rentalDate < :endDate AND r.returnDate > :startDate AND r.rentalStatus.status <> 'cancelled') OR r.rentalDate < :endDate AND r.rentalStatus.status = 'rented') " +
             "AND c.id IN " +
             "(SELECT ca.id FROM Car ca LEFT JOIN Rental r ON ca.id = r.car.id " +
             "WHERE r.returnDate = " +
             "(SELECT MAX(ra.returnDate) FROM Rental ra WHERE ra.returnDate < :startDate AND r.car.id = ra.car.id AND ra.rentalStatus.status <> 'cancelled') " +
-            "AND r.returnPlace = :startLocation AND r.rentalStatus.status <> 'cancelled') " + //nie wiem czy tu też nie trzeba właśnie tego statusu uwzględnić, do zastanawoienia czy ta część jest dobrze napisana teraz
+            "AND r.returnPlace = :startLocation AND r.rentalStatus.status <> 'cancelled') " +
             "AND c.id NOT IN " +
             "(SELECT ca.id FROM Car ca LEFT JOIN Rental r ON ca.id = r.car.id " +
             "WHERE r.rentalDate = :nextDate AND r.rentalPlace <> :endLocation AND r.rentalStatus.status = 'reserved')" +
