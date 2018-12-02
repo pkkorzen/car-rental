@@ -40,7 +40,7 @@ public class CarController {
         model.addAttribute("text", "All");
         Optional<UserDto> userOptional = userService.findUserByLogin(authentication.getName());
         userOptional.ifPresent(user -> model.addAttribute("userRole", user.getRole()));
-        return "cars/all-cars";
+        return "cars/fleet";
     }
 
 /*    @GetMapping("/available-cars")
