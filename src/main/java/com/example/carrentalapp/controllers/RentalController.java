@@ -161,13 +161,7 @@ public class RentalController {
 
     @GetMapping("rentals/cancel/{id}")
     public String cancelRental(@PathVariable Long id) {
-        Optional<Rental> rentalOptional = rentalService.findRentalById(id);
-        if(rentalOptional.isPresent()){
-            Rental rental = rentalOptional.get();
-            Optional<RentalStatus> rentalStatusOptional = rentalStatusService.findRentalStatusById(13L);
-            rentalStatusOptional.ifPresent(rental::setRentalStatus);
-            rentalService.saveRental(rental);
-        }
+        rentalService.cancelRental(id);
         return "redirect:/all-rentals";
     }
 }
