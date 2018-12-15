@@ -11,8 +11,12 @@ import java.util.Optional;
 @Service
 public class DatabaseLoginService implements LoginService {
 
-    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    public DatabaseLoginService(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
 
     @Override
     public boolean login(String login, String password) {

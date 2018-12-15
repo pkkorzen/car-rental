@@ -75,14 +75,6 @@ public class RentalController {
         return "redirect:/all-rentals";
     }
 
-    //ten chyba do wyrzucenia, nie będziemy raczej dodawać rentali w ten sposób
-    @GetMapping("rentals/add")
-    public String addRental(Model model) {
-        model.addAttribute("text", "Add");
-        model.addAttribute("rental", new Rental());
-        return "rentals/rental";
-    }
-
     @GetMapping("rentals/edit/{id}")
     public String editRental(@PathVariable Long id, Model model, Authentication authentication) {
         model.addAttribute("text", "Edit");

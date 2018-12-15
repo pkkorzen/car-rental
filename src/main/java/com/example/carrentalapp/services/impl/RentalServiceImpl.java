@@ -20,14 +20,15 @@ import java.util.stream.StreamSupport;
 public class RentalServiceImpl implements RentalService {
 
     private RentalRepository rentalRepository;
-    @Autowired
     private UserConverter userConverter;
-    @Autowired
     private RentalStatusRepository rentalStatusRepository;
 
     @Autowired
-    public RentalServiceImpl(RentalRepository rentalRepository){
+    public RentalServiceImpl(RentalRepository rentalRepository, UserConverter userConverter,
+                             RentalStatusRepository rentalStatusRepository){
         this.rentalRepository = rentalRepository;
+        this.rentalStatusRepository = rentalStatusRepository;
+        this.userConverter = userConverter;
     }
 
     @Override

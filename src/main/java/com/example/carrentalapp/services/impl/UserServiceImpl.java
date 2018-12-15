@@ -22,7 +22,8 @@ public class UserServiceImpl implements UserService {
     private UserDtoConverter userDtoConverter;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserConverter userConverter, UserDtoConverter userDtoConverter){
+    public UserServiceImpl(UserRepository userRepository, UserConverter userConverter,
+                           UserDtoConverter userDtoConverter){
         this.userRepository = userRepository;
         this.userConverter = userConverter;
         this.userDtoConverter = userDtoConverter;
