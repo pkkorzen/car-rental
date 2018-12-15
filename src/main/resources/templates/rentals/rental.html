@@ -26,8 +26,20 @@
         <option th:each="car : ${cars}" th:value="${car}" th:text="${car.make} + ' ' + ${car.model}">
         </option>
         </select></p>
-    <p>Rental Date: <input type="date" th:field="*{rentalDate}"/></p>
-    <p>Planned Date: <input type="date" th:field="*{returnDate}"/></p>
+    <p>Pick up Date: <input type="date" th:field="*{rentalDate}"/></p>
+    <p>Drop off Date: <input type="date" th:field="*{returnDate}"/></p>
+    <p>Pick up Location: <select th:field="*{rentalPlace}">
+        <option th:each="location : ${locations}" th:value="${location}" th:text="${location.city} + ', ' + ${location.street} + ' ' + ${location.number}">
+        </option>
+    </select></p>
+    <p>Drop off Location: <select th:field="*{returnPlace}">
+        <option th:each="location : ${locations}" th:value="${location}" th:text="${location.city} + ', ' + ${location.street} + ' ' + ${location.number}">
+        </option>
+    </select></p>
+    <p>Status: <select th:field="*{rentalStatus}">
+        <option th:each="status : ${statuses}" th:value="${status}" th:text="${status.status}">
+        </option>
+    </select></p>
     <p><input type="submit" name="pressed-button" value="Save"/>
         <input type="submit" name="pressed-button" value="Cancel"/>
         <input type="reset" value="Reset"/></p>

@@ -6,7 +6,10 @@ import com.example.carrentalapp.services.RentalStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class RentalStatusServiceImpl implements RentalStatusService {
@@ -21,6 +24,12 @@ public class RentalStatusServiceImpl implements RentalStatusService {
     @Override
     public Optional<RentalStatus> findRentalStatusByStatus(String status) {
         return rentalStatusRepository.findRentalStatusByStatus(status);
+    }
+
+    @Override
+    public List<RentalStatus> findAll() {
+        Iterable<RentalStatus> rentalStatuses = rentalStatusRepository.findAll();
+        return StreamSupport.stream(rentalStatuses.spliterator(),true).collect(Collectors.toList());
     }
 
     @Override

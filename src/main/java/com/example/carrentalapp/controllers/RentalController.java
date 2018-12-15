@@ -90,21 +90,28 @@ public class RentalController {
         List<UserDto> users = userService.findAll();
 
         Optional<Rental> rentalOptional = rentalService.findRentalById(id);
-        rentalOptional.ifPresent(rental -> model.addAttribute("rental", rental));
 
         LocalDate rentalDate = LocalDate.now();
         LocalDate returnDate = rentalDate.plus(1, ChronoUnit.DAYS);
+        Location startLocation = null;
+        Location endLocation = null;
 
         if (rentalOptional.isPresent()) {
             Rental rental = rentalOptional.get();
             model.addAttribute("rental", rental);
             rentalDate = rental.getRentalDate();
             returnDate = rental.getReturnDate();
+            startLocation = rental.getRentalPlace();
+            endLocation = rental.getReturnPlace();
         }
 
-        List<Car> cars = carService.findCarsAvailableByDates(rentalDate, returnDate);
+        List<Car> cars = carService.findCarsAvailableByDatesAndLocation(rentalDate, returnDate, startLocation, endLocation);
         Optional<UserDto> userOptional = userService.findUserByLogin(authentication.getName());
         userOptional.ifPresent(user -> model.addAttribute("userRole", user.getRole()));
+        List<Location> locations = locationService.findAllLocations();
+        List<RentalStatus> rentalStatuses = rentalStatusService.findAll();
+        model.addAttribute("locations", locations);
+        model.addAttribute("statuses", rentalStatuses);
         model.addAttribute("users", users);
         model.addAttribute("cars", cars);
         return "rentals/rental";
