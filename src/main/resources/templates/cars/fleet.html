@@ -24,6 +24,12 @@
             margin-bottom: 10px;
             background-color: white;
         }
+
+        .function {
+            display: inline;
+            float: right;
+        }
+
     </style>
 </head>
 <body>
@@ -37,16 +43,25 @@
                 <img class="img-fluid" th:src="'img/' + ${car.model.toLowerCase()} + '.jpg'" src="img/a.jpg">
             </div>
             <div class="col-8">
-                <h5>Car: <span th:text="${car.make} + ' ' + ${car.model}"></span></h5>
+                <span class="function" th:if="${userRole.equals('ROLE_ADMIN')}">
+                    <a th:href="@{'/cars/edit/' + ${car.id}}">Edit</a>&nbsp;|
+                    <span th:if="${userRole.equals('ROLE_ADMIN')}">
+                        <a th:href="@{'/cars/delete-confirmation/' + ${car.id}}">Delete</a>
+                    </span>
+                </span>
+                <h5>Car: <span th:text="${car.make} + ' ' + ${car.model}"></span>
+                </h5>
                 <h6>Car group: <span th:text="${car.type.type}"></span></h6>
-                <span th:if="${userRole.equals('ROLE_ADMIN')}"><a th:href="@{'/cars/edit/' + ${car.id}}">Edit</a>&nbsp;|</span>
-                <span th:if="${userRole.equals('ROLE_ADMIN')}"><a th:href="@{'/cars/delete-confirmation/' + ${car.id}}">Delete</a></span>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet augue sit amet ante efficitur
-                gravida sed ut quam. Sed ac felis vel justo dignissim malesuada quis sed risus. Proin interdum dignissim
-                libero, et pulvinar lacus fringilla a. Integer posuere congue quam, ut maximus lectus consectetur id.
-                Vestibulum facilisis congue mauris at iaculis. Cras dictum magna ex, ac iaculis lacus semper quis. Morbi
-                euismod rhoncus pharetra. Mauris in interdum urna. Nulla id suscipit felis, in pharetra lorem.
-                Pellentesque ac nunc vel enim cursus aliquam. Proin vitae tempus risus.<p/>
+                    gravida sed ut quam. Sed ac felis vel justo dignissim malesuada quis sed risus. Proin interdum
+                    dignissim
+                    libero, et pulvinar lacus fringilla a. Integer posuere congue quam, ut maximus lectus consectetur
+                    id.
+                    Vestibulum facilisis congue mauris at iaculis. Cras dictum magna ex, ac iaculis lacus semper quis.
+                    Morbi
+                    euismod rhoncus pharetra. Mauris in interdum urna. Nulla id suscipit felis, in pharetra lorem.
+                    Pellentesque ac nunc vel enim cursus aliquam. Proin vitae tempus risus.
+                <p/>
                 <div class="container">
                     <div class="row">
                         <div class="col-6">
