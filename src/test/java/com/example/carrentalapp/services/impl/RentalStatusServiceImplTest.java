@@ -18,8 +18,14 @@ public class RentalStatusServiceImplTest {
     private RentalStatusRepository rentalStatusRepository;
 
     @Test
-    public void findRentalStatusById() {
+    public void shouldfindRentalStatusById() {
         RentalStatus rentalStatus = rentalStatusRepository.findById(12L).get();
         assertEquals("rented", rentalStatus.getStatus());
+    }
+
+    @Test
+    public void shouldFindRentalStatusByStatus(){
+        RentalStatus rentalStatus = rentalStatusRepository.findRentalStatusByStatus("cancelled").get();
+        assertEquals("cancelled", rentalStatus.getStatus());
     }
 }

@@ -69,7 +69,7 @@ public class RentalServiceImpl implements RentalService {
         Optional<Rental> result = rentalRepository.findById(id);
         if(result.isPresent()){
             Rental rental = result.get();
-            Optional<RentalStatus> rentalStatusOptional = rentalStatusRepository.findById(13L);
+            Optional<RentalStatus> rentalStatusOptional = rentalStatusRepository.findRentalStatusByStatus("cancelled");
             rentalStatusOptional.ifPresent(rental::setRentalStatus);
             rentalRepository.save(rental);
         }

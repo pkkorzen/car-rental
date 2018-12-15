@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface RentalStatusService {
     Optional<RentalStatus> findRentalStatusById(Long id);
+    Optional<RentalStatus> findRentalStatusByStatus(String status);
 }

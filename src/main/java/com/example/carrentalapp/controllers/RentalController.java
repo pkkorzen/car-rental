@@ -142,7 +142,7 @@ public class RentalController {
         returnLocationOptional.ifPresent(rental::setReturnPlace);
         rental.setRentalDate(startDate);
         rental.setReturnDate(endDate);
-        Optional<RentalStatus> rentalStatusOptional = rentalStatusService.findRentalStatusById(11L);
+        Optional<RentalStatus> rentalStatusOptional = rentalStatusService.findRentalStatusByStatus("reserved");
         rentalStatusOptional.ifPresent(rental::setRentalStatus);
 
         Optional<Car> carOptional = carService.findCarById(id);

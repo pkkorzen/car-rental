@@ -19,6 +19,11 @@ public class RentalStatusServiceImpl implements RentalStatusService {
     }
 
     @Override
+    public Optional<RentalStatus> findRentalStatusByStatus(String status) {
+        return rentalStatusRepository.findRentalStatusByStatus(status);
+    }
+
+    @Override
     public Optional<RentalStatus> findRentalStatusById(Long id) {
         return rentalStatusRepository.findById(id);
     }
