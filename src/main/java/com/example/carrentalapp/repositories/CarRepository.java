@@ -10,11 +10,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface CarRepository extends CrudRepository<Car, Long> {
-    @Query(value = "SELECT c FROM Car c WHERE c.id NOT IN (SELECT ca.id FROM Car ca LEFT JOIN Rental r ON ca.id = r.car.id WHERE r.returnDate > ?1 AND r.rentalDate < ?2)")
-    List<Car> findCarsAvailableBetweenDates(LocalDate startDate, LocalDate endDate);
-
-    @Query(value = "SELECT c FROM Car c WHERE c.id NOT IN (SELECT ca.id FROM Car ca LEFT JOIN Rental r ON ca.id = r.car.id WHERE r.rentalDate < :endDate AND r.returnDate > :startDate) AND c.id IN (SELECT ca.id FROM Car ca LEFT JOIN Rental r ON ca.id = r.car.id WHERE r.returnDate = (SELECT MAX(ra.returnDate) FROM Rental ra WHERE ra.returnDate < :startDate AND r.car.id = ra.car.id) AND r.returnPlace = :location)")
-    List<Car> findCarsAvailableBetweenDatesInGivenLocation(@Param("startDate") LocalDate startDate, @Param("endDate")LocalDate endDate, @Param("location") Location location);
 
     @Query(value = "SELECT c FROM Car c WHERE c.id NOT IN " +
             "(SELECT ca.id FROM Car ca LEFT JOIN Rental r ON ca.id = r.car.id " +

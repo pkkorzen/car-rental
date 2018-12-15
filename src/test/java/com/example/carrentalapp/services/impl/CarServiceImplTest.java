@@ -52,23 +52,6 @@ public class CarServiceImplTest {
     }
 
     @Test
-    public void shouldFindCarsAvailableByDates() {
-        LocalDate startDate = LocalDate.of(2018, Month.NOVEMBER, 1);
-        LocalDate endDate = LocalDate.of(2018, Month.NOVEMBER,3);
-        List<Car> cars = carService.findCarsAvailableByDates(startDate, endDate);
-        assertEquals(2, cars.size());
-    }
-    @Test
-    public void shouldFindCarsAvailableByDatesAndLocation() {
-        LocalDate startDate = LocalDate.of(2018, Month.NOVEMBER, 21);
-        LocalDate endDate = LocalDate.of(2018, Month.NOVEMBER,22);
-        Location location = new Location();
-        location.setId(10L);
-        List<Car> cars = carService.findCarsAvailableByDatesAndLocation(startDate, endDate, location);
-        assertEquals(2, cars.size());
-    }
-
-    @Test
     public void shouldFindAvailableCarsByDatesAndLocationWhereTheCarIsNotRentedTheDayAfterInDifferentPlace(){
         LocalDate startDate = LocalDate.of(2018, Month.NOVEMBER, 21);
         LocalDate endDate = LocalDate.of(2018, Month.NOVEMBER,22);
