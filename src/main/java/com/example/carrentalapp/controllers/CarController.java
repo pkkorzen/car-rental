@@ -25,7 +25,7 @@ public class CarController {
 
     @Autowired
     public CarController(CarService carService, TypeService typeService, UserService userService,
-                         LocationService locationService){
+                         LocationService locationService) {
         this.carService = carService;
         this.typeService = typeService;
         this.userService = userService;
@@ -33,7 +33,7 @@ public class CarController {
     }
 
     @GetMapping("/all-cars")
-    public String showAllCars(Model model, Authentication authentication){
+    public String showAllCars(Model model, Authentication authentication) {
         List<Car> cars = carService.findAllCars();
         model.addAttribute("cars", cars);
         model.addAttribute("text", "All");
@@ -43,23 +43,16 @@ public class CarController {
     }
 
     @PostMapping("/available-cars")
-    public String showAvailableCars(Model model, @RequestParam(name="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-                                    @RequestParam(name="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-                                    @RequestParam(name="startLocation") Long startLocationId,
-                                    @RequestParam(name="endLocation") Long endLocationId,
-                                    Authentication authentication){
-        Optional<Location> startLocationOptional = locationService.findLocationById(startLocationId);
-        Optional<Location> endLocationOptional = locationService.findLocationById(endLocationId);
-        Location rentalLocation = null;
-        Location returnLocation = null;
-        if(startLocationOptional.isPresent()){
-            model.addAttribute("startLocation", startLocationOptional.get());
-            rentalLocation = startLocationOptional.get();
-        }
-        if(endLocationOptional.isPresent()){
-            model.addAttribute("endLocation", endLocationOptional.get());
-            returnLocation = endLocationOptional.get();
-        }
+    public String showAvailableCars(Model model, @RequestParam(name = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                    @RequestParam(name = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+                                    @RequestParam(name = "startLocation") Long startLocationId,
+                                    @RequestParam(name = "endLocation") Long endLocationId,
+                                    Authentication authentication) {
+        Location rentalLocation = findLocation(locationService, startLocationId);
+        Location returnLocation = findLocation(locationService, endLocationId);
+        model.addAttribute("startLocation", rentalLocation);
+        model.addAttribute("endLocation", returnLocation);
+
         List<Car> cars = carService.findCarsAvailableByDatesAndLocation(startDate, endDate, rentalLocation, returnLocation);
         model.addAttribute("cars", cars);
         model.addAttribute("text", "Available");
@@ -67,20 +60,25 @@ public class CarController {
         model.addAttribute("endDate", endDate);
         Optional<UserDto> userOptional = userService.findUserByLogin(authentication.getName());
         userOptional.ifPresent(user -> model.addAttribute("userRole", user.getRole()));
-        return"cars/all-cars";
+        return "cars/all-cars";
+    }
+
+    private Location findLocation(LocationService locationService, Long locationId) {
+        Optional<Location> location = locationService.findLocationById(locationId);
+        return location.orElseGet(()-> locationService.findLocationById(10L).get());
     }
 
     @PostMapping("cars/save")
-    public String saveCar(@ModelAttribute Car car, @RequestParam("pressed-button") String pushedButton){
+    public String saveCar(@ModelAttribute Car car, @RequestParam("pressed-button") String pushedButton) {
 
-        if(pushedButton.equalsIgnoreCase("save")){
+        if (pushedButton.equalsIgnoreCase("save")) {
             carService.saveCar(car);
         }
         return "redirect:/all-cars";
     }
 
     @GetMapping("cars/add")
-    public String addCar(Model model){
+    public String addCar(Model model) {
         List<Type> types = typeService.findAll();
         model.addAttribute("text", "New");
         model.addAttribute("car", new Car());
@@ -90,7 +88,7 @@ public class CarController {
     }
 
     @GetMapping("cars/edit/{id}")
-    public String editCar(@PathVariable Long id, Model model){
+    public String editCar(@PathVariable Long id, Model model) {
         List<Type> types = typeService.findAll();
         model.addAttribute("text", "Edit");
         model.addAttribute("gearboxType", Gearbox.values());
