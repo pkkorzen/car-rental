@@ -26,12 +26,12 @@ INSERT INTO location (id, street, number, city, zip_code) VALUES
 
 INSERT INTO car (id, make, model, reg_number, door_number, gearbox, capacity, year, id_type, available) VALUES
 (10, 'Opel', 'Astra', 'AGD1233', 5, 'A', 5, 2010, 10, true),
-(11, 'Ford', 'Fiesta', 'BGD1269', 3, 'M', 5, 2015, 10, true),
-(12, 'Mazda', 'Mx6', 'WAW1233', 3, 'M', 5, 2016, 11, true),
-(13, 'Subaru', 'Impreza', 'ASL2233', 5, 'M', 4, 2018, 12, true),
-(14, 'Seat', 'Ateca', 'DL24321', 5, 'M', 5, 2018, 12, false),
-(15, 'Toyota', 'Supra', 'DL24321', 5, 'M', 5, 2018, 12, true),
-(16, 'Renault', 'Clio', 'WAW8764', 5, 'M', 5, 2018, 10, false);
+(11, 'Fiat', 'Punto', 'BGD1269', 5, 'M', 5, 2015, 10, true),
+(12, 'Ford', 'Mondeo', 'WAW1233', 5, 'M', 5, 2016, 11, true),
+(13, 'Ford', 'Mustang', 'ASL2233', 5, 'M', 2, 2018, 12, true),
+(14, 'Opel', 'Insignia', 'DL24321', 5, 'M', 5, 2018, 12, false),
+(15, 'Opel', 'Zafira', 'DL24321', 5, 'M', 7, 2018, 12, true),
+(16, 'Ford', 'Fiesta', 'WAW8764', 5, 'M', 5, 2018, 10, false);
 
 INSERT INTO user (id, name, surname, id_address, mail, phone, login, password, id_role) VALUES
 (10, 'Jan', 'Kowalski', 13, 'j@malpa.pl', '555123443', 'janek', 'bomba', 11),
