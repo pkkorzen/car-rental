@@ -117,19 +117,6 @@ public class RentalController {
         return "rentals/rental";
     }
 
-    @GetMapping("rentals/delete-confirmation/{id}")
-    public String deleteConfirmation(@PathVariable Long id, Model model) {
-        Optional<Rental> rentalOptional = rentalService.findRentalById(id);
-        rentalOptional.ifPresent(rental -> model.addAttribute("rentalToAsk", rental));
-        return "rentals/delete-confirmation";
-    }
-
-    @GetMapping("rentals/delete/{id}")
-    public String deleteRental(@PathVariable Long id) {
-        rentalService.deleteRental(id);
-        return "redirect:/all-rentals";
-    }
-
     @GetMapping("rentals/rental-confirmation/{id}/{startDate}/{endDate}/{startLocationId}/{endLocationId}")
     public String confirmRental(@PathVariable Long id, Model model, Authentication authentication,
                                 @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,

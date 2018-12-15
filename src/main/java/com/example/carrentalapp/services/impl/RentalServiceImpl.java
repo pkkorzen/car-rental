@@ -59,12 +59,6 @@ public class RentalServiceImpl implements RentalService {
     }
 
     @Override
-    public void deleteRental(Long id) {
-        Optional<Rental> result = rentalRepository.findById(id);
-        result.ifPresent(rental -> rentalRepository.delete(rental));
-    }
-
-    @Override
     public void cancelRental(Long id) {
         Optional<Rental> result = rentalRepository.findById(id);
         if(result.isPresent()){

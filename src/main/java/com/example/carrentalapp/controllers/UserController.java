@@ -48,19 +48,4 @@ public class UserController {
         userOptional.ifPresent(user -> model.addAttribute("user", user));
         return "user/user";
     }
-
-    @GetMapping("user/delete-confirmation/{id}")
-    public String deleteConfirmation(@PathVariable Long id, Model model){
-        Optional<UserDto> userDtoOptional = userService.findUserById(id);
-        userDtoOptional.ifPresent(userDto -> model.addAttribute("userToAsk", userDto));
-        return "user/delete-confirmation";
-    }
-
-    @GetMapping("user/delete/{id}")
-    public String deleteUser(@PathVariable Long id){
-
-        userService.deleteUser(id);
-
-        return "user/all-users";
-    }
 }

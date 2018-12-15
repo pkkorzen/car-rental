@@ -55,10 +55,4 @@ public class CarServiceImpl implements CarService {
     public void saveCar(Car car) {
         carRepository.save(car);
     }
-
-    @Override
-    public void deleteCar(Long id) {
-        Optional<Car> result = carRepository.findById(id);
-        result.ifPresent(car -> carRepository.delete(car));
-    }
 }

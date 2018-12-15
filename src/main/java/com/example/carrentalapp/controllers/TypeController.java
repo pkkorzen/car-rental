@@ -53,17 +53,4 @@ public class TypeController {
         typeOptional.ifPresent(type -> typeService.saveType(type));
         return "types/type";
     }
-
-    @GetMapping("types/delete-confirmation/{id}")
-    public String deleteConfirmation(@PathVariable Long id, Model model){
-        Optional<Type> typeOptional = typeService.findTypeById(id);
-        typeOptional.ifPresent(type -> model.addAttribute("typeToAsk", type));
-        return "types/delete-confirmation";
-    }
-
-    @GetMapping("types/delete/{id}")
-    public String deleteType(@PathVariable Long id){
-        typeService.deleteType(id);
-        return "redirect:/all-types";
-    }
 }
