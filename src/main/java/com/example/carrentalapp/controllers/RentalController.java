@@ -2,10 +2,7 @@ package com.example.carrentalapp.controllers;
 
 import com.example.carrentalapp.converters.UserConverter;
 import com.example.carrentalapp.dto.UserDto;
-import com.example.carrentalapp.entities.Car;
-import com.example.carrentalapp.entities.Location;
-import com.example.carrentalapp.entities.Rental;
-import com.example.carrentalapp.entities.RentalStatus;
+import com.example.carrentalapp.entities.*;
 import com.example.carrentalapp.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
@@ -132,7 +131,18 @@ public class RentalController {
         rentalStatusOptional.ifPresent(rental::setRentalStatus);
 
         Optional<Car> carOptional = carService.findCarById(id);
-        carOptional.ifPresent(rental::setCar);
+        Type typeRented = new Type();
+        if(carOptional.isPresent()){
+            Car car = carOptional.get();
+            typeRented = car.getType();
+            rental.setCar(car);
+        }
+
+        int daysRented = Period.between(startDate, endDate).getDays();
+        BigDecimal days = BigDecimal.valueOf(daysRented);
+
+        BigDecimal totalPrice = typeRented.getPrice().multiply(days);
+        model.addAttribute("price", totalPrice);
 
         model.addAttribute("rental", rental);
         return "rentals/rental-confirmation";
