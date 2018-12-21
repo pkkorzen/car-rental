@@ -24,13 +24,13 @@
         <form action="#" th:action="@{/types/save}" th:object="${type}" method="post">
             <input type="hidden" th:field="*{id}"/>
             <div class="form-group row">
-                <label for="type">Type:</label>
+                <label for="type" class="col-sm-2 col-form-label">Type:</label>
                 <div class="col">
                     <input type="text" class="form-control" th:field="*{type}" id="type" aria-describedby="start_date">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="price">Price:</label>
+                <label for="price" class="col-sm-2 col-form-label">Price:</label>
                 <div class="col">
                     <input type="text" class="form-control" th:field="*{price}" id="price"
                            aria-describedby="start_date">
