@@ -3,17 +3,45 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="/css/styles.css" rel="stylesheet" type="text/css"/>
     <title th:text="${text} + ' type'">address</title>
 </head>
 <body>
-<h2 th:text="${text} + ' type'"><b>address</b></h2>
-<form action="#" th:action="@{/types/save}" th:object="${type}" method="post">
-    <input type="hidden" th:field="*{id}"/>
-    <p>Type: <input type="text" th:field="*{type}"/></p>
-    <p>Price: <input type="text" th:field="*{price}"/></p>
-    <p><input type="submit" name="pressed-button" value="Save"/>
-        <input type="submit" name="pressed-button" value="Cancel"/>
-        <input type="reset" value="Reset"/></p>
-</form>
+<div class="container">
+    <header th:include="menu.html">
+    </header>
+    <div class="jumbotron">
+        <h2 th:text="${text} + ' type'"><b>address</b></h2>
+        <form action="#" th:action="@{/types/save}" th:object="${type}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+            <div class="form-group row">
+                <label for="type">Type:</label>
+                <div class="col">
+                    <input type="text" class="form-control" th:field="*{type}" id="type" aria-describedby="start_date">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="price">Price:</label>
+                <div class="col">
+                    <input type="text" class="form-control" th:field="*{price}" id="price"
+                           aria-describedby="start_date">
+                </div>
+            </div>
+            <button type="reset" class="btn btn-primary" name="pressed-button">Reset</button>
+            <button type="submit" class="btn btn-primary" name="pressed-button" value="save">Save</button>
+            <button type="submit" class="btn btn-primary" name="pressed-button" value="cancel">Cancel</button>
+        </form>
+    </div>
+    <footer th:include="menu.html"></footer>
+</div>
 </body>
 </html>
