@@ -54,4 +54,12 @@ public class UserController {
         setUserRoleAttribute(model, authentication);
         return "user/user";
     }
+
+    @GetMapping("user-details")
+    public String showUserDetails(Model model, Authentication authentication){
+        Optional<UserDto> userOptional = userService.findUserByLogin(authentication.getName());
+        userOptional.ifPresent(userDto -> model.addAttribute("user", userDto));
+        setUserRoleAttribute(model, authentication);
+        return "user/user-details";
+    }
 }

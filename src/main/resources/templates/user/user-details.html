@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="/css/styles.css" rel="stylesheet" type="text/css"/>
+    <title>Account Details</title>
+</head>
+<body>
+<div class="container">
+    <header th:include="menu.html">
+    </header>
+    <div class="jumbotron">
+        <h2>Your Account Details
+        <span class="function"><a th:href="@{'user/edit/' + ${user.id}}">Edit</a></span></h2>
+        <form action="#" th:object="${user}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+            <input type="hidden" th:field="*{role}"/>
+            <input type="hidden" th:field="*{login}"/>
+            <input type="hidden" th:field="*{password}"/>
+            <input type="hidden" th:field="*{addressId}"/>
+            <input type="hidden" th:field="*{roleId}"/>
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <td><label for="name">Name:</label></td>
+                    <td><input id="name" class="form-control" type="text" th:field="*{name}" readonly/></td>
+                </tr>
+                <tr>
+                    <td><label for="surname">Surname:</label></td>
+                    <td><input id="surname" class="form-control" type="text" th:field="*{surname}" readonly/></td>
+                </tr>
+                <tr>
+                    <td><label for="login">Login:</label></td>
+                    <td><input id="login" class="form-control" type="text" th:field="*{login}" readonly/></td>
+                </tr>
+                <tr>
+                    <td><label for="email">Email:</label></td>
+                    <td><input id="email" class="form-control" type="text" th:field="*{mail}" readonly/></td>
+                </tr>
+                <tr>
+                    <td><label for="phone">Phone:</label></td>
+                    <td><input id="phone" class="form-control" type="text" th:field="*{phone}" readonly/></td>
+                </tr>
+                <tr>
+                    <td><label for="street">Street:</label></td>
+                    <td><input id="street" class="form-control" type="text" th:field="*{street}" readonly/></td>
+                </tr>
+                <tr>
+                    <td><label for="number">Street number:</label></td>
+                    <td><input id="number" class="form-control" type="number" th:field="*{number}" readonly/></td>
+                </tr>
+                <tr>
+                    <td><label for="city">City:</label></td>
+                    <td><input id="city" class="form-control" type="text" th:field="*{city}" readonly/></td>
+                </tr>
+                <tr>
+                    <td><label for="zipCode">ZipCode:</label></td>
+                    <td><input id="zipCode" class="form-control" type="text" th:field="*{zipCode}" readonly/></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <footer th:include="menu.html"></footer>
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+</body>
+</html>

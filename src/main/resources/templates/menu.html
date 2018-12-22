@@ -12,12 +12,16 @@
     <a class="nav-item nav-link" href="/all-rentals">Rentals</a>
     <a class="nav-item nav-link" href="/all-types">Types</a>
     <a class="nav-item nav-link" href="/all-users">Users</a>
+    <a class="nav-item nav-link" href="/user-details">Your account</a>
+    <a class="nav-item nav-link" href="/logout">Logout</a>
 </nav>
 <nav th:unless="${userRole.equals('ROLE_ADMIN')}" class="nav nav-pills nav-justified">
     <a class="nav-item nav-link" href="/">Home</a>
     <a class="nav-item nav-link" href="/all-cars">Fleet</a>
     <a class="nav-item nav-link" href="/all-rentals">Rentals</a>
-    <a class="nav-item nav-link" href="#">Disabled</a>
+    <a th:if="${userRole.equals('ROLE_GUEST')}" class="nav-item nav-link" href="/user/login">Login</a>
+    <a th:unless="${userRole.equals('ROLE_GUEST')}" class="nav-item nav-link" href="/user-details">Your account</a>
+    <a th:unless="${userRole.equals('ROLE_GUEST')}" class="nav-item nav-link" href="/logout">Logout</a>
 </nav>
 </body>
 </html>
