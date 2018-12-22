@@ -35,19 +35,26 @@ public class UserConverter implements Function<UserDto, User> {
         if(userDto.getId()!=null){
             user.setId(userDto.getId());
             Optional<Address> addressOptional = addressService.findAddressById(userDto.getAddressId());
-            addressOptional.ifPresent(user::setAddress);
+            if(addressOptional.isPresent()){
+                Address address = addressOptional.get();
+                setUserAddress(userDto, user, address);
+            }
             userRoleOptional = userRoleService.findUserRoleById(userDto.getRoleId());
             userRoleOptional.ifPresent(user::setUserRole);
         } else {
             Address address = new Address();
-            address.setCity(userDto.getCity());
-            address.setNumber(userDto.getNumber());
-            address.setStreet(userDto.getStreet());
-            address.setZipCode(userDto.getZipCode());
-            user.setAddress(address);
+            setUserAddress(userDto, user, address);
             userRoleOptional = userRoleService.findUserRoleById(10L);
             userRoleOptional.ifPresent(user::setUserRole);
         }
         return user;
+    }
+
+    private void setUserAddress(UserDto userDto, User user, Address address) {
+        address.setCity(userDto.getCity());
+        address.setNumber(userDto.getNumber());
+        address.setStreet(userDto.getStreet());
+        address.setZipCode(userDto.getZipCode());
+        user.setAddress(address);
     }
 }
