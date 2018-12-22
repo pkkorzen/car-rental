@@ -11,7 +11,7 @@ public class Type {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String type;
+    private String typeName;
     private BigDecimal price;
 
     public Long getId() {
@@ -22,12 +22,12 @@ public class Type {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public String getTypeName() {
+        return typeName;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 
     public BigDecimal getPrice() {

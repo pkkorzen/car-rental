@@ -1,12 +1,19 @@
 <!doctype html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="utf-8">
     <title></title>
 
 </head>
 <body>
-<nav class="nav nav-pills nav-justified">
+<nav th:if="${userRole.equals('ROLE_ADMIN')}" class="nav nav-pills nav-justified">
+    <a class="nav-item nav-link" href="/">Home</a>
+    <a class="nav-item nav-link" href="/all-cars">Fleet</a>
+    <a class="nav-item nav-link" href="/all-rentals">Rentals</a>
+    <a class="nav-item nav-link" href="/all-types">Types</a>
+    <a class="nav-item nav-link" href="/all-users">Users</a>
+</nav>
+<nav th:unless="${userRole.equals('ROLE_ADMIN')}" class="nav nav-pills nav-justified">
     <a class="nav-item nav-link" href="/">Home</a>
     <a class="nav-item nav-link" href="/all-cars">Fleet</a>
     <a class="nav-item nav-link" href="/all-rentals">Rentals</a>

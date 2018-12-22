@@ -118,8 +118,14 @@ public class RentalController {
 
         String login = authentication.getName();
         Optional<UserDto> userOptional = userService.findUserByLogin(login);
+        UserDto userDto;
 
-        userOptional.ifPresent(userDto -> rental.setUser(userConverter.apply(userDto)));
+        if (userOptional.isPresent()) {
+            userDto = userOptional.get();
+            model.addAttribute("userRole", userDto.getRole());
+        }
+
+        userOptional.ifPresent(user -> rental.setUser(userConverter.apply(user)));
 
         Optional<Location> rentalLocationOptional = locationService.findLocationById(startLocationId);
         rentalLocationOptional.ifPresent(rental::setRentalPlace);
@@ -149,7 +155,15 @@ public class RentalController {
     }
 
     @GetMapping("rentals/cancel-confirmation/{id}")
-    public String cancelConfirmation(@PathVariable Long id, Model model) {
+    public String cancelConfirmation(@PathVariable Long id, Model model, Authentication authentication) {
+        String login = authentication.getName();
+        Optional<UserDto> userOptional = userService.findUserByLogin(login);
+        UserDto userDto = new UserDto();
+
+        if (userOptional.isPresent()) {
+            userDto = userOptional.get();
+            model.addAttribute("userRole", userDto.getRole());
+        }
         Optional<Rental> rentalOptional = rentalService.findRentalById(id);
         rentalOptional.ifPresent(rental -> model.addAttribute("rentalToAsk", rental));
         return "rentals/cancel-confirmation";

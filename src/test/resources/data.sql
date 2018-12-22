@@ -4,7 +4,7 @@ INSERT INTO address(id, street, number, city, zip_code) VALUES
 (12, 'Maslana', 3, 'Warszawa', '03-542'),
 (13, 'Rzymowskiego', 27, 'Warszawa', '00-001');
 
-INSERT INTO type (id, type, price) VALUES
+INSERT INTO type (id, type_name, price) VALUES
 (10, 'A', '149.99'),
 (11, 'B', '199.99'),
 (12, 'C', '249.99');

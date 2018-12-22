@@ -22,7 +22,7 @@ public class TypeServiceImplTest {
     @Test
     public void shouldFindTypeById() {
         Type type = typeService.findTypeById(10L).get();
-        assertEquals("A", type.getType());
+        assertEquals("A", type.getTypeName());
     }
 
     @Test
@@ -36,7 +36,7 @@ public class TypeServiceImplTest {
         List<Type> typesBeforeSave = typeService.findAll();
         Type type = new Type();
         type.setPrice(BigDecimal.valueOf(169.90));
-        type.setType("D");
+        type.setTypeName("D");
         typeService.saveType(type);
         List<Type> typesAfterSave = typeService.findAll();
         assertEquals(typesBeforeSave.size()+1, typesAfterSave.size());

@@ -20,7 +20,7 @@
     <p>Capacity: <input type="number" th:field="*{capacity}"/></p>
     <p>Year: <input type="number" th:field="*{year}"/></p>
     <p>Type: <select th:field="*{type}">
-        <option th:each="type : ${types}" th:value="${type}" th:text="${type.type}"></option>
+        <option th:each="type : ${types}" th:value="${type}" th:text="${type.typeName}"></option>
 <!--        <option th:if="*{type!=null}" th:value="*{type}" th:text="*{type.type}">
         </option>
         <option th:unless="*{type!=null}" value="">Choose...</option>
