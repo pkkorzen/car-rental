@@ -1,7 +1,6 @@
 package com.example.carrentalapp.controllers;
 
 import com.example.carrentalapp.dto.UserDto;
-import com.example.carrentalapp.entities.Rental;
 import com.example.carrentalapp.entities.Type;
 import com.example.carrentalapp.services.TypeService;
 import com.example.carrentalapp.services.UserService;
@@ -31,19 +30,13 @@ public class TypeController {
         List<Type> types = typeService.findAll();
         model.addAttribute("types", types);
 
-        getUserRole(model, authentication);
+        setUserRoleAttribute(model, authentication);
         return "types/all-types";
     }
 
-    private void getUserRole(Model model, Authentication authentication) {
-        String login = authentication.getName();
-        Optional<UserDto> userOptional = userService.findUserByLogin(login);
-        UserDto userDto;
-
-        if (userOptional.isPresent()) {
-            userDto = userOptional.get();
-            model.addAttribute("userRole", userDto.getRole());
-        }
+    private void setUserRoleAttribute(Model model, Authentication authentication) {
+        Optional<UserDto> userOptional = userService.findUserByLogin(authentication.getName());
+        userOptional.ifPresent(user -> model.addAttribute("userRole", user.getRole()));
     }
 
     @PostMapping("types/save")
@@ -60,7 +53,7 @@ public class TypeController {
     public String addType(Model model, Authentication authentication){
         model.addAttribute("text", "Add");
         model.addAttribute("type", new Type());
-        getUserRole(model, authentication);
+        setUserRoleAttribute(model, authentication);
         return "types/type";
     }
 
@@ -70,7 +63,7 @@ public class TypeController {
 
         Optional<Type> typeOptional = typeService.findTypeById(id);
         typeOptional.ifPresent(type -> model.addAttribute("type",type));
-        getUserRole(model, authentication);
+        setUserRoleAttribute(model, authentication);
         return "types/type";
     }
 }

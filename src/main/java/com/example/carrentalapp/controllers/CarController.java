@@ -37,9 +37,13 @@ public class CarController {
         List<Car> cars = carService.findAllCars();
         model.addAttribute("cars", cars);
         model.addAttribute("text", "All");
+        setUserRoleAttribute(model, authentication);
+        return "cars/fleet";
+    }
+
+    private void setUserRoleAttribute(Model model, Authentication authentication) {
         Optional<UserDto> userOptional = userService.findUserByLogin(authentication.getName());
         userOptional.ifPresent(user -> model.addAttribute("userRole", user.getRole()));
-        return "cars/fleet";
     }
 
     @PostMapping("/available-cars")
@@ -58,8 +62,7 @@ public class CarController {
         model.addAttribute("text", "Available");
         model.addAttribute("startDate", startDate);
         model.addAttribute("endDate", endDate);
-        Optional<UserDto> userOptional = userService.findUserByLogin(authentication.getName());
-        userOptional.ifPresent(user -> model.addAttribute("userRole", user.getRole()));
+        setUserRoleAttribute(model, authentication);
         return "cars/all-cars";
     }
 

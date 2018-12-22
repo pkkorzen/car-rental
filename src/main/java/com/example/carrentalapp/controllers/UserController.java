@@ -1,10 +1,7 @@
 package com.example.carrentalapp.controllers;
 
 import com.example.carrentalapp.dto.UserDto;
-import com.example.carrentalapp.entities.User;
-import com.example.carrentalapp.repositories.UserRepository;
 import com.example.carrentalapp.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,19 +29,13 @@ public class UserController {
         List<UserDto> userDtos = userService.findAll();
         model.addAttribute("users", userDtos);
 
-        getUserRole(model, authentication);
+        setUserRoleAttribute(model, authentication);
         return "user/all-users";
     }
 
-    private void getUserRole(Model model, Authentication authentication) {
-        String login = authentication.getName();
-        Optional<UserDto> userOptional = userService.findUserByLogin(login);
-        UserDto userDto;
-
-        if (userOptional.isPresent()) {
-            userDto = userOptional.get();
-            model.addAttribute("userRole", userDto.getRole());
-        }
+    private void setUserRoleAttribute(Model model, Authentication authentication) {
+        Optional<UserDto> userOptional = userService.findUserByLogin(authentication.getName());
+        userOptional.ifPresent(user -> model.addAttribute("userRole", user.getRole()));
     }
 
     @PostMapping("user/save")
@@ -60,7 +51,7 @@ public class UserController {
         model.addAttribute("text", "Edit");
         Optional<UserDto> userOptional = userService.findUserById(id);
         userOptional.ifPresent(user -> model.addAttribute("user", user));
-        getUserRole(model, authentication);
+        setUserRoleAttribute(model, authentication);
         return "user/user";
     }
 }
