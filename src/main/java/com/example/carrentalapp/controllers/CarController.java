@@ -81,24 +81,25 @@ public class CarController {
     }
 
     @GetMapping("cars/add")
-    public String addCar(Model model) {
+    public String addCar(Model model, Authentication authentication) {
         List<Type> types = typeService.findAll();
         model.addAttribute("text", "New");
         model.addAttribute("car", new Car());
         model.addAttribute("gearboxType", Gearbox.values());
         model.addAttribute("types", types);
+        setUserRoleAttribute(model, authentication);
         return "cars/car";
     }
 
     @GetMapping("cars/edit/{id}")
-    public String editCar(@PathVariable Long id, Model model) {
+    public String editCar(@PathVariable Long id, Model model, Authentication authentication) {
         List<Type> types = typeService.findAll();
         model.addAttribute("text", "Edit");
         model.addAttribute("gearboxType", Gearbox.values());
         model.addAttribute("types", types);
         Optional<Car> carOptional = carService.findCarById(id);
         carOptional.ifPresent(car -> model.addAttribute("car", car));
-
+        setUserRoleAttribute(model, authentication);
         return "cars/car";
     }
 }

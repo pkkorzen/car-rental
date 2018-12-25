@@ -15,34 +15,76 @@
     <title th:text="${text} + ' rental'">address</title>
 </head>
 <body>
-<h2 th:text="${text} + ' rental'"><b>address</b></h2>
-<form action="#" th:action="@{/rentals/save}" th:object="${rental}" method="post">
-    <input type="hidden" th:field="*{id}"/>
-    <p th:if="${userRole.equals('ROLE_ADMIN')}">User: <select th:field="*{user}">
-        <option th:each="user : ${users}" th:value="${user}" th:text="${user.name} + ' ' + ${user.surname}"></option>
-    </select></p>
-    <p th:unless="${userRole.equals('ROLE_ADMIN')}"><input type="hidden" th:field="*{user.id}"/></p>
-    <p>Car: <select th:field="*{car}">
-        <option th:each="car : ${cars}" th:value="${car}" th:text="${car.make} + ' ' + ${car.model}">
-        </option>
-        </select></p>
-    <p>Pick up Date: <input type="date" th:field="*{rentalDate}"/></p>
-    <p>Drop off Date: <input type="date" th:field="*{returnDate}"/></p>
-    <p>Pick up Location: <select th:field="*{rentalPlace}">
-        <option th:each="location : ${locations}" th:value="${location}" th:text="${location.city} + ', ' + ${location.street} + ' ' + ${location.number}">
-        </option>
-    </select></p>
-    <p>Drop off Location: <select th:field="*{returnPlace}">
-        <option th:each="location : ${locations}" th:value="${location}" th:text="${location.city} + ', ' + ${location.street} + ' ' + ${location.number}">
-        </option>
-    </select></p>
-    <p>Status: <select th:field="*{rentalStatus}">
-        <option th:each="status : ${statuses}" th:value="${status}" th:text="${status.status}">
-        </option>
-    </select></p>
-    <p><input type="submit" name="pressed-button" value="Save"/>
-        <input type="submit" name="pressed-button" value="Cancel"/>
-        <input type="reset" value="Reset"/></p>
-</form>
+<div class="container">
+    <header th:include="menu.html">
+    </header>
+    <div class="jumbotron">
+        <h2 th:text="${text} + ' rental'"><b>address</b></h2>
+        <form action="#" th:action="@{/rentals/save}" th:object="${rental}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+            <div class="form-group row" th:if="${userRole.equals('ROLE_ADMIN')}">
+                <label for="user" class="col-sm-2 col-form-label">User:</label>
+                <div class="col">
+                    <select id="user" th:field="*{user}">
+                        <option th:each="user : ${users}" th:value="${user}" th:text="${user.name} + ' ' + ${user.surname}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row" th:unless="${userRole.equals('ROLE_ADMIN')}">
+                <input type="hidden" th:field="*{user.id}"/>
+            </div>
+            <div class="form-group row">
+                <label for="car" class="col-sm-2 col-form-label">Car:</label>
+                <div class="col">
+                    <select id="car" th:field="*{car}">
+                        <option th:each="car : ${cars}" th:value="${car}" th:text="${car.make} + ' ' + ${car.model}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="rentalDate" class="col-sm-2 col-form-label">Pick up Date:</label>
+                <div class="col">
+                    <input type="date" class="form-control" th:field="*{rentalDate}" id="rentalDate"
+                           aria-describedby="start_date">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="returnDate" class="col-sm-2 col-form-label">Drop off Date:</label>
+                <div class="col">
+                    <input type="date" class="form-control" th:field="*{returnDate}" id="returnDate"
+                           aria-describedby="start_date">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="rentalPlace" class="col-sm-2 col-form-label">Pick up Location:</label>
+                <div class="col">
+                    <select id="rentalPlace" th:field="*{rentalPlace}">
+                        <option th:each="location : ${locations}" th:value="${location}" th:text="${location.city} + ', ' + ${location.street} + ' ' + ${location.number}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="returnPlace" class="col-sm-2 col-form-label">Drop off Location:</label>
+                <div class="col">
+                    <select id="returnPlace" th:field="*{returnPlace}">
+                        <option th:each="location : ${locations}" th:value="${location}" th:text="${location.city} + ', ' + ${location.street} + ' ' + ${location.number}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="rentalStatus" class="col-sm-2 col-form-label">Drop off Location:</label>
+                <div class="col">
+                    <select id="rentalStatus" th:field="*{rentalStatus}">
+                        <option th:each="status : ${statuses}" th:value="${status}" th:text="${status.status}"></option>
+                    </select>
+                </div>
+            </div>
+            <button type="reset" class="btn btn-primary" name="pressed-button">Reset</button>
+            <button type="submit" class="btn btn-primary" name="pressed-button" value="save">Save</button>
+            <button type="submit" class="btn btn-primary" name="pressed-button" value="cancel">Cancel</button>
+        </form>
+    </div>
+    <footer th:include="menu.html"></footer>
+</div>
 </body>
 </html>

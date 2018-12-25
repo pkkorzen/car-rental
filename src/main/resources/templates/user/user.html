@@ -24,20 +24,26 @@
         <form action="#" th:action="@{/user/save}" th:object="${user}" method="post">
             <input type="hidden" th:field="*{id}"/>
             <input type="hidden" th:field="*{role}"/>
-            <input type="hidden" th:field="*{login}"/>
             <input type="hidden" th:field="*{password}"/>
             <input type="hidden" th:field="*{addressId}"/>
             <input type="hidden" th:field="*{roleId}"/>
             <div class="form-group row">
-                <label for="type" class="col-sm-2 col-form-label">Name:</label>
+                <label for="name" class="col-sm-2 col-form-label">Name:</label>
                 <div class="col">
-                    <input type="text" class="form-control" th:field="*{name}" id="type" aria-describedby="start_date">
+                    <input type="text" class="form-control" th:field="*{name}" id="name" aria-describedby="start_date">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="surname" class="col-sm-2 col-form-label">Surname:</label>
                 <div class="col">
                     <input type="text" class="form-control" th:field="*{surname}" id="surname"
+                           aria-describedby="start_date">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="login" class="col-sm-2 col-form-label">Login:</label>
+                <div class="col">
+                    <input type="text" class="form-control" th:field="*{login}" id="login"
                            aria-describedby="start_date">
                 </div>
             </div>

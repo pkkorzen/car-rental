@@ -2,34 +2,98 @@
 <html lang="en">
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="/css/styles.css" rel="stylesheet" type="text/css"/>
     <title th:text="${text} + ' car'">address</title>
 </head>
 <body>
-<h2 th:text="${text} + ' car'"><b>address</b></h2>
-<form action="#" th:action="@{/cars/save}" th:object="${car}" method="post">
-    <input type="hidden" th:field="*{id}"/>
-    <p>Make: <input type="text" th:field="*{make}"/></p>
-    <p>Model: <input type="text" th:field="*{model}"/></p>
-    <p>Registration Number: <input type="text" th:field="*{regNumber}"/></p>
-    <p>Door Number: <input type="number" th:field="*{doorNumber}"/></p>
-    <p>Gearbox: <select th:field="*{gearbox}">
-        <option th:each="type : ${gearboxType}" th:value="${type}" th:text="${type}">
-        </option>
-    </select></p>
-    <p>Capacity: <input type="number" th:field="*{capacity}"/></p>
-    <p>Year: <input type="number" th:field="*{year}"/></p>
-    <p>Type: <select th:field="*{type}">
-        <option th:each="type : ${types}" th:value="${type}" th:text="${type.typeName}"></option>
-<!--        <option th:if="*{type!=null}" th:value="*{type}" th:text="*{type.type}">
-        </option>
-        <option th:unless="*{type!=null}" value="">Choose...</option>
-        <option th:each="type : ${types}" th:if="${car.type} != ${type}" th:value="${type}" th:text="${type.type}">
-        </option>-->
-    </select></p>
-    <p><input type="submit" name="pressed-button" value="Save"/>
-        <input type="submit" name="pressed-button" value="Cancel"/>
-        <input type="reset" value="Reset"/></p>
-</form>
+<div class="container">
+    <header th:include="menu.html">
+    </header>
+    <div class="jumbotron">
+        <h2 th:text="${text} + ' car'"><b>address</b></h2>
+        <form action="#" th:action="@{/cars/save}" th:object="${car}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+            <div class="form-group row">
+                <label for="make" class="col-sm-2 col-form-label">Make:</label>
+                <div class="col">
+                    <input type="text" class="form-control" th:field="*{make}" id="make">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="model" class="col-sm-2 col-form-label">Model:</label>
+                <div class="col">
+                    <input type="text" class="form-control" th:field="*{model}" id="model"
+                           aria-describedby="start_date">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="registrationNumber" class="col-sm-2 col-form-label">Registration number:</label>
+                <div class="col">
+                    <input type="text" class="form-control" th:field="*{regNumber}" id="registrationNumber"
+                           aria-describedby="start_date">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="doorNumber" class="col-sm-2 col-form-label">Door number:</label>
+                <div class="col">
+                    <input type="number" class="form-control" th:field="*{doorNumber}" id="doorNumber"
+                           aria-describedby="start_date">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="gearbox" class="col-sm-2 col-form-label">Gearbox:</label>
+                <div class="col">
+                    <select id="gearbox" th:field="*{gearbox}">
+                        <option th:each="type : ${gearboxType}" th:value="${type}" th:text="${type}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="capacity" class="col-sm-2 col-form-label">Capacity:</label>
+                <div class="col">
+                    <input type="number" class="form-control" th:field="*{capacity}" id="capacity"
+                           aria-describedby="start_date">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="year" class="col-sm-2 col-form-label">Year:</label>
+                <div class="col">
+                    <input type="number" class="form-control" th:field="*{year}" id="year"
+                           aria-describedby="start_date">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="type" class="col-sm-2 col-form-label">Type:</label>
+                <div class="col">
+                    <select id="type" th:field="*{type}">
+                        <option th:each="type : ${types}" th:value="${type}" th:text="${type.typeName}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="available" class="col-sm-2 col-form-label">Available:</label>
+                <div class="col" id="available">
+                    <label class="radio-inline"><input type="radio" th:field="*{available}" th:value="true">Yes</label>
+                    <label class="radio-inline"><input type="radio" th:field="*{available}" th:value="false">No</label>
+                </div>
+            </div>
+            <button type="reset" class="btn btn-primary" name="pressed-button">Reset</button>
+            <button type="submit" class="btn btn-primary" name="pressed-button" value="save">Save</button>
+            <button type="submit" class="btn btn-primary" name="pressed-button" value="cancel">Cancel</button>
+        </form>
+    </div>
+    <footer th:include="menu.html"></footer>
+</div>
 </body>
 </html>
