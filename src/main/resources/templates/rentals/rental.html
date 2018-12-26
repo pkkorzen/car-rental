@@ -25,7 +25,7 @@
             <div class="form-group row" th:if="${userRole.equals('ROLE_ADMIN')}">
                 <label for="user" class="col-sm-2 col-form-label">User:</label>
                 <div class="col">
-                    <select id="user" th:field="*{user}">
+                    <select class="form-control" id="user" th:field="*{user}">
                         <option th:each="user : ${users}" th:value="${user}" th:text="${user.name} + ' ' + ${user.surname}"></option>
                     </select>
                 </div>
@@ -36,7 +36,7 @@
             <div class="form-group row">
                 <label for="car" class="col-sm-2 col-form-label">Car:</label>
                 <div class="col">
-                    <select id="car" th:field="*{car}">
+                    <select class="form-control" id="car" th:field="*{car}">
                         <option th:each="car : ${cars}" th:value="${car}" th:text="${car.make} + ' ' + ${car.model}"></option>
                     </select>
                 </div>
@@ -58,7 +58,7 @@
             <div class="form-group row">
                 <label for="rentalPlace" class="col-sm-2 col-form-label">Pick up Location:</label>
                 <div class="col">
-                    <select id="rentalPlace" th:field="*{rentalPlace}">
+                    <select class="form-control" id="rentalPlace" th:field="*{rentalPlace}">
                         <option th:each="location : ${locations}" th:value="${location}" th:text="${location.city} + ', ' + ${location.street} + ' ' + ${location.number}"></option>
                     </select>
                 </div>
@@ -66,15 +66,15 @@
             <div class="form-group row">
                 <label for="returnPlace" class="col-sm-2 col-form-label">Drop off Location:</label>
                 <div class="col">
-                    <select id="returnPlace" th:field="*{returnPlace}">
+                    <select class="form-control" id="returnPlace" th:field="*{returnPlace}">
                         <option th:each="location : ${locations}" th:value="${location}" th:text="${location.city} + ', ' + ${location.street} + ' ' + ${location.number}"></option>
                     </select>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="rentalStatus" class="col-sm-2 col-form-label">Drop off Location:</label>
+                <label for="rentalStatus" class="col-sm-2 col-form-label">Status:</label>
                 <div class="col">
-                    <select id="rentalStatus" th:field="*{rentalStatus}">
+                    <select class="form-control" id="rentalStatus" th:field="*{rentalStatus}">
                         <option th:each="status : ${statuses}" th:value="${status}" th:text="${status.status}"></option>
                     </select>
                 </div>

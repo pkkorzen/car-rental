@@ -29,7 +29,7 @@
             <div class="form-group row" th:if="${userRole.equals('ROLE_ADMIN')}">
                 <label for="userRole" class="col-sm-2 col-form-label">User role:</label>
                 <div class="col">
-                    <select id="userRole" th:field="*{roleId}">
+                    <select class="form-control" id="userRole" th:field="*{roleId}">
                         <option th:each="role : ${userRoles}" th:value="${role.id}" th:text="${role.role}"></option>
                     </select>
                 </div>

@@ -52,7 +52,7 @@
             <div class="form-group row">
                 <label for="gearbox" class="col-sm-2 col-form-label">Gearbox:</label>
                 <div class="col">
-                    <select id="gearbox" th:field="*{gearbox}">
+                    <select class="form-control" id="gearbox" th:field="*{gearbox}">
                         <option th:each="type : ${gearboxType}" th:value="${type}" th:text="${type}">
                         </option>
                     </select>
@@ -75,7 +75,7 @@
             <div class="form-group row">
                 <label for="type" class="col-sm-2 col-form-label">Type:</label>
                 <div class="col">
-                    <select id="type" th:field="*{type}">
+                    <select class="form-control"id="type" th:field="*{type}">
                         <option th:each="type : ${types}" th:value="${type}" th:text="${type.typeName}">
                         </option>
                     </select>
