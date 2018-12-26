@@ -45,4 +45,10 @@ public class CarServiceImpl implements CarService {
     public void saveCar(Car car) {
         carRepository.save(car);
     }
+
+    @Override
+    public List<Car> findAllAvailableCars() {
+        Iterable<Car> carIterable = carRepository.findAllByAvailableTrue();
+        return StreamSupport.stream(carIterable.spliterator(), true).collect(Collectors.toList());
+    }
 }

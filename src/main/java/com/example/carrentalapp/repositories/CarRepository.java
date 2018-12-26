@@ -30,4 +30,5 @@ public interface CarRepository extends CrudRepository<Car, Long> {
                                                   @Param("nextDate")LocalDate nextDate,
                                                   @Param("startLocation") Location startLocation,
                                                   @Param("endLocation") Location endLocation);
+    Iterable<Car> findAllByAvailableTrue();
 }

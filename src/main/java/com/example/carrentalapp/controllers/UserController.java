@@ -43,7 +43,7 @@ public class UserController {
         if (pushedButton.equalsIgnoreCase("save")){
             userService.save(userDto);
         }
-        return "redirect:/";
+        return "redirect:/all-users";
     }
 
     @GetMapping("user/edit/{id}")

@@ -28,13 +28,8 @@
                 <th scope="col">Name</th>
                 <th scope="col">Surname</th>
                 <th scope="col">Mail</th>
-                <th scope="col">Phone</th>
                 <th scope="col">Login</th>
                 <th scope="col">Role</th>
-                <th scope="col">Street</th>
-                <th scope="col">Number</th>
-                <th scope="col">City</th>
-                <th scope="col">Zip code</th>
                 <th scope="col">Edit</th>
                 <th scope="col">Delete</th>
             </tr>
@@ -45,13 +40,8 @@
                 <td th:text="${user.name}">30</td>
                 <td th:text="${user.surname}">30</td>
                 <td th:text="${user.mail}">00-001</td>
-                <td th:text="${user.phone}">Warsaw</td>
                 <td th:text="${user.login}">Warsaw</td>
                 <td th:text="${user.role}">Warsaw</td>
-                <td th:text="${user.street}">Warsaw</td>
-                <td th:text="${user.number}">Warsaw</td>
-                <td th:text="${user.city}">Warsaw</td>
-                <td th:text="${user.zipCode}">Warsaw</td>
                 <td><a th:href="@{'/user/edit/' + ${user.id}}">Edit</a> </td>
                 <td><a th:href="@{'/user/delete-confirmation/' + ${user.id}}">Delete</a> </td>
             </tr>
