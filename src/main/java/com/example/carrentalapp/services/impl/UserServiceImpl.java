@@ -58,4 +58,10 @@ public class UserServiceImpl implements UserService {
     public void save(UserDto userDto) {
         userRepository.save(userConverter.apply(userDto));
     }
+
+    @Override
+    public void deleteUser(Long id) {
+        Optional<User> result = userRepository.findById(id);
+        result.ifPresent(user -> userRepository.delete(user));
+    }
 }

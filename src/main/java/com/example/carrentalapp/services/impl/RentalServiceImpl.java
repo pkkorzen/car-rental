@@ -69,4 +69,10 @@ public class RentalServiceImpl implements RentalService {
             rentalRepository.save(rental);
         }
     }
+
+    @Override
+    public void deleteRental(Long id) {
+        Optional<Rental> result = rentalRepository.findById(id);
+        result.ifPresent(rental -> rentalRepository.delete(rental));
+    }
 }

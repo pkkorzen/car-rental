@@ -15,4 +15,5 @@ public interface RentalService {
     List<Rental> findAllRentalsByUser(UserDto userDto);
     void saveRental(Rental rental);
     void cancelRental(Long id);
+    void deleteRental(Long id);
 }

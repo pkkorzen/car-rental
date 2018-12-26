@@ -68,4 +68,20 @@ public class UserController {
         setUserRoleAttribute(model, authentication);
         return "user/user-details";
     }
+
+    @GetMapping("user/delete-confirmation/{id}")
+    public String deleteConfirmation(@PathVariable Long id, Model model, Authentication authentication){
+        Optional<UserDto> userDtoOptional = userService.findUserById(id);
+        userDtoOptional.ifPresent(userDto -> model.addAttribute("userToAsk", userDto));
+        setUserRoleAttribute(model, authentication);
+        return "user/delete-confirmation";
+    }
+
+    @GetMapping("user/delete/{id}")
+    public String deleteUser(@PathVariable Long id){
+
+        userService.deleteUser(id);
+
+        return "redirect:/all-users";
+    }
 }

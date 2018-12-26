@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="/css/styles.css" rel="stylesheet" type="text/css"/>
+    <title>Delete confirmation</title>
+</head>
+<body>
+<div class="container">
+    <header th:include="menu.html">
+    </header>
+    <div class="jumbotron">
+        <h2>Do you really want to delete user:</h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Login</th>
+                <th scope="col">Name</th>
+                <th scope="col">Surname</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${userToAsk.id}">30</td>
+                <td th:text="${userToAsk.login}">00-001</td>
+                <td th:text="${userToAsk.name}">Warsaw</td>
+                <td th:text="${userToAsk.surname}">Warsaw</td>
+            </tr>
+            </tbody>
+        </table>
+        <h4><a th:href="@{'/user/delete/' + ${userToAsk.id}}">Yes</a>&nbsp;&nbsp;<a th:href="@{/all-users}">No</a></h4>
+    </div>
+    <footer th:include="menu.html"></footer>
+</div>
+</body>
+</html>

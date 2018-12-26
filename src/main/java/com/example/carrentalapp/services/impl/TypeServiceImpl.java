@@ -36,4 +36,10 @@ public class TypeServiceImpl implements TypeService {
     public void saveType(Type type) {
         typeRepository.save(type);
     }
+
+    @Override
+    public void deleteType(Long id) {
+        Optional<Type> result = typeRepository.findById(id);
+        result.ifPresent(type -> typeRepository.delete(type));
+    }
 }

@@ -1,5 +1,7 @@
 package com.example.carrentalapp.entities;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -12,9 +14,11 @@ public class Rental {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "id_user")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
     @ManyToOne
     @JoinColumn(name ="id_car")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Car car;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate rentalDate;

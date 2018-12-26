@@ -102,4 +102,19 @@ public class CarController {
         setUserRoleAttribute(model, authentication);
         return "cars/car";
     }
+
+    @GetMapping("cars/delete-confirmation/{id}")
+    public String deleteConfirmation(@PathVariable Long id, Model model, Authentication authentication){
+        Optional<Car> carOptional = carService.findCarById(id);
+        carOptional.ifPresent(car -> model.addAttribute("carToAsk", car));
+        setUserRoleAttribute(model, authentication);
+        return "cars/delete-confirmation";
+    }
+
+    @GetMapping("cars/delete/{id}")
+    public String deleteCar(@PathVariable Long id){
+        carService.deleteCar(id);
+
+        return "redirect:/all-cars";
+    }
 }

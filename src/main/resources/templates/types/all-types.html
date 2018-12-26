@@ -35,8 +35,6 @@
                 <td th:text="${type.typeName}">Alabastrowa</td>
                 <td th:text="${type.price}">30</td>
                 <td><a th:href="@{'/types/edit/' + ${type.id}}">Edit</a></td>
-                <td><a
-                        th:href="@{'/types/delete-confirmation/' + ${type.id}}">Delete</a></td>
             </tr>
             </tbody>
         </table>

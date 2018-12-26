@@ -9,4 +9,5 @@ public interface TypeService {
     Optional<Type> findTypeById(Long id);
     List<Type> findAll();
     void saveType(Type type);
+    void deleteType(Long id);
 }

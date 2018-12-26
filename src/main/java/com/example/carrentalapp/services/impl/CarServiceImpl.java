@@ -51,4 +51,10 @@ public class CarServiceImpl implements CarService {
         Iterable<Car> carIterable = carRepository.findAllByAvailableTrue();
         return StreamSupport.stream(carIterable.spliterator(), true).collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteCar(Long id) {
+        Optional<Car> result = carRepository.findById(id);
+        result.ifPresent(car -> carRepository.delete(car));
+    }
 }

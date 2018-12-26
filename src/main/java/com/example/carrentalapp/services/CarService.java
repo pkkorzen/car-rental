@@ -14,4 +14,5 @@ public interface CarService {
                                                   Location endLocation);
     void saveCar(Car car);
     List<Car> findAllAvailableCars();
+    void deleteCar(Long id);
 }

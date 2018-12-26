@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -153,12 +152,35 @@ public class RentalController {
         }
         Optional<Rental> rentalOptional = rentalService.findRentalById(id);
         rentalOptional.ifPresent(rental -> model.addAttribute("rentalToAsk", rental));
-        return "rentals/cancel-confirmation";
+        model.addAttribute("text", "cancel");
+        return "rentals/delete-cancel-confirmation";
     }
 
     @GetMapping("rentals/cancel/{id}")
     public String cancelRental(@PathVariable Long id) {
         rentalService.cancelRental(id);
+        return "redirect:/all-rentals";
+    }
+
+    @GetMapping("rentals/delete-confirmation/{id}")
+    public String deleteConfirmation(@PathVariable Long id, Model model, Authentication authentication) {
+        String login = authentication.getName();
+        Optional<UserDto> userOptional = userService.findUserByLogin(login);
+        UserDto userDto = new UserDto();
+
+        if (userOptional.isPresent()) {
+            userDto = userOptional.get();
+            model.addAttribute("userRole", userDto.getRole());
+        }
+        Optional<Rental> rentalOptional = rentalService.findRentalById(id);
+        rentalOptional.ifPresent(rental -> model.addAttribute("rentalToAsk", rental));
+        model.addAttribute("text", "delete");
+        return "rentals/delete-cancel-confirmation";
+    }
+
+    @GetMapping("rentals/delete/{id}")
+    public String deleteRental(@PathVariable Long id) {
+        rentalService.deleteRental(id);
         return "redirect:/all-rentals";
     }
 }

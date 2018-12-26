@@ -12,4 +12,5 @@ public interface UserService {
     Optional<UserDto> findUserById(Long id);
     List<UserDto> findAll();
     void save(UserDto userDto);
+    void deleteUser(Long id);
 }
