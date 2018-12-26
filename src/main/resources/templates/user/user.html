@@ -23,10 +23,20 @@
         <h2 th:text="${text} + ' user'"><b>address</b></h2>
         <form action="#" th:action="@{/user/save}" th:object="${user}" method="post">
             <input type="hidden" th:field="*{id}"/>
-            <input type="hidden" th:field="*{role}"/>
+<!--            <input type="hidden" th:field="*{role}"/>-->
             <input type="hidden" th:field="*{password}"/>
             <input type="hidden" th:field="*{addressId}"/>
-            <input type="hidden" th:field="*{roleId}"/>
+            <div class="form-group row" th:if="${userRole.equals('ROLE_ADMIN')}">
+                <label for="userRole" class="col-sm-2 col-form-label">User role:</label>
+                <div class="col">
+                    <select id="userRole" th:field="*{roleId}">
+                        <option th:each="role : ${userRoles}" th:value="${role.id}" th:text="${role.role}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row" th:unless="${userRole.equals('ROLE_ADMIN')}">
+                <input type="hidden" th:field="*{roleId}"/>
+            </div>
             <div class="form-group row">
                 <label for="name" class="col-sm-2 col-form-label">Name:</label>
                 <div class="col">

@@ -1,6 +1,8 @@
 package com.example.carrentalapp.controllers;
 
 import com.example.carrentalapp.dto.UserDto;
+import com.example.carrentalapp.entities.UserRole;
+import com.example.carrentalapp.services.UserRoleService;
 import com.example.carrentalapp.services.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -14,9 +16,11 @@ import java.util.Optional;
 public class UserController {
 
     private UserService userService;
+    private UserRoleService userRoleService;
 
-    public UserController(UserService userService){
+    public UserController(UserService userService, UserRoleService userRoleService){
         this.userService = userService;
+        this.userRoleService = userRoleService;
     }
 
     @GetMapping("/user/login")
@@ -52,6 +56,8 @@ public class UserController {
         Optional<UserDto> userOptional = userService.findUserById(id);
         userOptional.ifPresent(user -> model.addAttribute("user", user));
         setUserRoleAttribute(model, authentication);
+        List<UserRole> userRoles = userRoleService.findAllUserRoles();
+        model.addAttribute("userRoles", userRoles);
         return "user/user";
     }
 
