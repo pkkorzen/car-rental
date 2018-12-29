@@ -1,13 +1,14 @@
-	header nav, footer nav{
+	header nav, footer nav, header .dropdown-menu, footer .dropdown-menu{
 	background-color:#1a75ff;
 	color:white;
 	}
 	
-	footer nav a:link, footer nav a:visited, header nav a:link, header nav a:visited{
+	footer nav a:link, footer nav a:visited, header nav a:link, header nav a:visited, footer .dropdown-menu a:link,
+	footer .dropdown-menu a:visited, header .dropdown-menu a:link, header .dropdown-menu a:visited{
 	color: white;
 	}
 
-	footer nav a:hover, header nav a:hover{
+	footer nav a:hover, header nav a:hover, header .dropdown-menu a:hover, footer .dropdown-menu a:hover{
 	background-color:#66a3ff;
 	}
 
