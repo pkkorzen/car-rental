@@ -80,7 +80,7 @@ public class RentalController {
         List<UserDto> users = userService.findAll();
 
         Optional<Rental> rentalOptional = rentalService.findRentalById(id);
-        rentalOptional.ifPresent(rental -> model.addAttribute("rental",rental));
+        rentalOptional.ifPresent(rental -> model.addAttribute("rental", rental));
 
         List<Car> cars = carService.findAllAvailableCars();
         Optional<UserDto> userOptional = userService.findUserByLogin(authentication.getName());
@@ -109,9 +109,8 @@ public class RentalController {
         if (userOptional.isPresent()) {
             userDto = userOptional.get();
             model.addAttribute("userRole", userDto.getRole());
+            rental.setUser(userConverter.apply(userDto));
         }
-
-        userOptional.ifPresent(user -> rental.setUser(userConverter.apply(user)));
 
         Optional<Location> rentalLocationOptional = locationService.findLocationById(startLocationId);
         rentalLocationOptional.ifPresent(rental::setRentalPlace);
@@ -124,7 +123,7 @@ public class RentalController {
 
         Optional<Car> carOptional = carService.findCarById(id);
         Type typeRented = new Type();
-        if(carOptional.isPresent()){
+        if (carOptional.isPresent()) {
             Car car = carOptional.get();
             typeRented = car.getType();
             rental.setCar(car);
@@ -142,17 +141,7 @@ public class RentalController {
 
     @GetMapping("rentals/cancel-confirmation/{id}")
     public String cancelConfirmation(@PathVariable Long id, Model model, Authentication authentication) {
-        String login = authentication.getName();
-        Optional<UserDto> userOptional = userService.findUserByLogin(login);
-        UserDto userDto = new UserDto();
-
-        if (userOptional.isPresent()) {
-            userDto = userOptional.get();
-            model.addAttribute("userRole", userDto.getRole());
-        }
-        Optional<Rental> rentalOptional = rentalService.findRentalById(id);
-        rentalOptional.ifPresent(rental -> model.addAttribute("rentalToAsk", rental));
-        model.addAttribute("text", "cancel");
+        setAttributes(id, model, authentication, "cancel");
         return "rentals/delete-cancel-confirmation";
     }
 
@@ -164,17 +153,7 @@ public class RentalController {
 
     @GetMapping("rentals/delete-confirmation/{id}")
     public String deleteConfirmation(@PathVariable Long id, Model model, Authentication authentication) {
-        String login = authentication.getName();
-        Optional<UserDto> userOptional = userService.findUserByLogin(login);
-        UserDto userDto = new UserDto();
-
-        if (userOptional.isPresent()) {
-            userDto = userOptional.get();
-            model.addAttribute("userRole", userDto.getRole());
-        }
-        Optional<Rental> rentalOptional = rentalService.findRentalById(id);
-        rentalOptional.ifPresent(rental -> model.addAttribute("rentalToAsk", rental));
-        model.addAttribute("text", "delete");
+        setAttributes(id, model, authentication, "delete");
         return "rentals/delete-cancel-confirmation";
     }
 
@@ -182,5 +161,21 @@ public class RentalController {
     public String deleteRental(@PathVariable Long id) {
         rentalService.deleteRental(id);
         return "redirect:/all-rentals";
+    }
+
+    private void setUserRoleAttribute(Model model, Authentication authentication) {
+        Optional<UserDto> userOptional = userService.findUserByLogin(authentication.getName());
+        userOptional.ifPresent(user -> model.addAttribute("userRole", user.getRole()));
+    }
+
+    private void setRentalToAskAttribute(Long id, Model model) {
+        Optional<Rental> rentalOptional = rentalService.findRentalById(id);
+        rentalOptional.ifPresent(rental -> model.addAttribute("rentalToAsk", rental));
+    }
+
+    private void setAttributes(Long id, Model model, Authentication authentication, String text) {
+        setUserRoleAttribute(model, authentication);
+        setRentalToAskAttribute(id, model);
+        model.addAttribute("text", text);
     }
 }
