@@ -31,4 +31,15 @@ public class LocationServiceImpl implements LocationService {
     public Optional<Location> findLocationById(Long id) {
         return locationRepository.findById(id);
     }
+
+    @Override
+    public void saveLocation(Location location) {
+        locationRepository.save(location);
+    }
+
+    @Override
+    public void deleteLocation(Long id) {
+        Optional<Location> locationOptional = locationRepository.findById(id);
+        locationOptional.ifPresent(location -> locationRepository.delete(location));
+    }
 }

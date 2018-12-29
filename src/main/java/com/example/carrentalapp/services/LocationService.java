@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface LocationService {
     List<Location> findAllLocations();
     Optional<Location> findLocationById(Long id);
+    void saveLocation(Location location);
+    void deleteLocation(Long id);
 }

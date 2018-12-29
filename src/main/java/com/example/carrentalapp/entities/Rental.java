@@ -26,9 +26,11 @@ public class Rental {
     private LocalDate returnDate;
     @ManyToOne
     @JoinColumn(name = "rental_place")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Location rentalPlace;
     @ManyToOne
     @JoinColumn(name = "return_place")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Location returnPlace;
     @ManyToOne
     @JoinColumn(name = "id_status")
